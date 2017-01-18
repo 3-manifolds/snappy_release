@@ -10,9 +10,16 @@ install:
   # FXrays
   - hg clone https://bitbucket.org/t3m/fxrays
   - cd fxrays
-  - "%PYTHON%\\python.exe setup.py release"
+  - "%PYTHON%\\python.exe setup.py release -r12"
   - cd ..
+
+  # CyPari
+  - hg clone http://bitbucket.org/t3m/cypari
+  - cd cypari/Version2
+  - "%PYTHON%\\python.exe setup.py release -r12"
 
 artifacts:
   - path: fxrays\dist\*.whl
   - path: fxrays\dist\*.tar.gz
+  - path: cypari\dist\*.whl
+  - path: cypari\dist\*.tar.gz
