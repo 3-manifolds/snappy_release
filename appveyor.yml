@@ -1,0 +1,18 @@
+environment:
+  matrix:
+    - PYTHON: "C:\\Python27"
+
+build: off
+
+install:
+  - "%PYTHON%\\python.exe -m pip install --upgrade pip setuptools cython wheel"
+  
+  # FXrays
+  - hg clone https://bitbucket.org/t3m/fxrays
+  - cd fxrays
+  - "%PYTHON%\\python.exe setup.py release"
+  - cd ..
+
+artifacts:
+  - path: fxrays\dist\*.whl
+  - path: fxrays\dist\*.tar.gz
