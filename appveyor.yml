@@ -1,11 +1,24 @@
 environment:
   matrix:
+    # For Python versions available on Appveyor, see
+    # http://www.appveyor.com/docs/installed-software#python
+
     - PYTHON: "C:\\Python27"
+    #- PYTHON: "C:\\Python27-x64"
+    #- PYTHON: "C:\\Python34"
+    #- PYTHON: "C:\\Python34-x64"
+    #- PYTHON: "C:\\Python35"
+    #- PYTHON: "C:\\Python35-x64"
+    #- PYTHON: "C:\\Python36"
+    #- PYTHON: "C:\\Python36-x64"
+
+
+    
 
 build: off
 
 install:
-  - "%PYTHON%\\python.exe -m pip install --upgrade pip setuptools cython wheel"
+  - "%PYTHON%\\python.exe -m pip install --upgrade pip setuptools cython six wheel"
   
   # FXrays
   - hg clone https://bitbucket.org/t3m/fxrays
@@ -17,6 +30,10 @@ install:
   - hg clone http://bitbucket.org/t3m/cypari
   - cd cypari/Version2
   - "%PYTHON%\\python.exe setup.py release -r12"
+
+  # Spherogram
+  - hg clone http://bitbucket.org/t3m/cypari
+
 
 artifacts:
   - path: fxrays\dist\*.whl
