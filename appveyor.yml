@@ -18,25 +18,44 @@ environment:
 build: off
 
 install:
-  - "%PYTHON%\\python.exe -m pip install --upgrade pip setuptools cython six wheel"
+  - "%PYTHON%\\python.exe -m pip install --upgrade pip setuptools six cython wheel"
   
   # FXrays
   - hg clone https://bitbucket.org/t3m/fxrays
   - cd fxrays
-  - "%PYTHON%\\python.exe setup.py release -r12"
+  - "%PYTHON%\\python.exe setup.py release -r12 --install"
   - cd ..
 
   # CyPari
-  - hg clone http://bitbucket.org/t3m/cypari
-  - cd cypari/Version2
-  - "%PYTHON%\\python.exe setup.py release -r12"
+  #  - hg clone http://bitbucket.org/t3m/cypari
+  #- cd cypari/Version2
+  #- "%PYTHON%\\python.exe setup.py release -r12"
+  #- cd ../..
+
+  # PLink
+  #- hg clone http://bitbucket.org/t3m/plink
+  #- cd plink
+  #- "%PYTHON%\\python.exe setup.py release -r1"
+  #- "%PYTHON%\\python.exe setup.py install"
+  #- cd ..
 
   # Spherogram
-  - hg clone http://bitbucket.org/t3m/cypari
+  #- hg clone http://bitbucket.org/t3m/spherogram
+  #- cd spherogram
+  #- "%PYTHON%\\python.exe setup.py release -r1"
+  #- "%PYTHON%\\python.exe setup.py install"
+  #- cd ..
 
+  # SnapPy
+  #- hg clone http://bitbucket.org/t3m/snappy
+  #- cd snappy
+  #- "%PYTHON%\\python.exe setup.py release -r1"
+  #- "%PYTHON%\\python.exe setup.py release -r1"	
+  #- cd ..
+  
 
 artifacts:
   - path: fxrays\dist\*.whl
   - path: fxrays\dist\*.tar.gz
-  - path: cypari\dist\*.whl
-  - path: cypari\dist\*.tar.gz
+  #- path: cypari\dist\*.whl
+  #- path: cypari\dist\*.tar.gz
