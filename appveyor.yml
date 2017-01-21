@@ -12,50 +12,36 @@ environment:
     #- PYTHON: "C:\\Python36"
     #- PYTHON: "C:\\Python36-x64"
 
-
-    
-
 build: off
 
 install:
   - "%PYTHON%\\python.exe -m pip install --upgrade pip setuptools six cython wheel"
-  
-  # FXrays
-  - hg clone https://bitbucket.org/t3m/fxrays
-  - cd fxrays
-  - "%PYTHON%\\python.exe setup.py release -r12 --install"
+  - "%PYTHON%\\python.exe -m pip install --upgrade decorator FXrays cypari networkx ipython"	
+
+  #PLink
+  - hg clone http://bitbucket.org/t3m/plink
+  - cd plink
+  - "%PYTHON%\\python.exe setup.py release --install"
   - cd ..
 
-  # CyPari
-  #  - hg clone http://bitbucket.org/t3m/cypari
-  #- cd cypari/Version2
-  #- "%PYTHON%\\python.exe setup.py release -r12"
-  #- cd ../..
-
-  # PLink
-  #- hg clone http://bitbucket.org/t3m/plink
-  #- cd plink
-  #- "%PYTHON%\\python.exe setup.py release -r1"
-  #- "%PYTHON%\\python.exe setup.py install"
-  #- cd ..
-
   # Spherogram
-  #- hg clone http://bitbucket.org/t3m/spherogram
-  #- cd spherogram
-  #- "%PYTHON%\\python.exe setup.py release -r1"
-  #- "%PYTHON%\\python.exe setup.py install"
-  #- cd ..
+  - hg clone http://bitbucket.org/t3m/spherogram
+  - cd spherogram
+  - "%PYTHON%\\python.exe setup.py release --install"
+  - cd ..
 
   # SnapPy
-  #- hg clone http://bitbucket.org/t3m/snappy
-  #- cd snappy
-  #- "%PYTHON%\\python.exe setup.py release -r1"
-  #- "%PYTHON%\\python.exe setup.py release -r1"	
-  #- cd ..
+  - hg clone http://bitbucket.org/t3m/snappy
+  - cd spherogram
+  - "%PYTHON%\\python.exe setup.py release --install"
+  - cd ..
   
 
 artifacts:
-  - path: fxrays\dist\*.whl
-  - path: fxrays\dist\*.tar.gz
-  #- path: cypari\dist\*.whl
-  #- path: cypari\dist\*.tar.gz
+  - path: plink\dist\*.tar.gz
+  - path: spherogram\dist\*.tar.gz
+  - path: spherogram\dist\*.whl
+  - path: snappy\dist\*.tar.gz
+  - path: snappy\dist\*.whl
+ 
+  
