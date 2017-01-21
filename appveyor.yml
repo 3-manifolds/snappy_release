@@ -35,7 +35,7 @@ install:
   - cd snappy
   #- "%PYTHON%\\python.exe setup.py release --install"
   - "%PYTHON%\\python.exe setup.py install"
-  - '%PYTHON%\\python.exe setup.py install -c "import snappy.browser"'
+  - '%PYTHON%\\python.exe -c "import snappy.browser"'
   - cd ..
   
 
