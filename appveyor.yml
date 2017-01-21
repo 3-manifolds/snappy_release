@@ -33,7 +33,9 @@ install:
   # SnapPy
   - hg clone https://bitbucket.org/t3m/snappy
   - cd snappy
-  - "%PYTHON%\\python.exe setup.py release --install"
+  #- "%PYTHON%\\python.exe setup.py release --install"
+  - "%PYTHON%\\python.exe setup.py install"
+  - '%PYTHON%\\python.exe setup.py install -c "import snappy.browser"'
   - cd ..
   
 
