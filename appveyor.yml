@@ -19,20 +19,20 @@ install:
   - "%PYTHON%\\python.exe -m pip install --upgrade decorator FXrays cypari networkx ipython"	
 
   #PLink
-  - hg clone http://bitbucket.org/t3m/plink
+  - hg clone https://bitbucket.org/t3m/plink
   - cd plink
   - "%PYTHON%\\python.exe setup.py release --install"
   - cd ..
 
   # Spherogram
-  - hg clone http://bitbucket.org/t3m/spherogram
+  - hg clone https://bitbucket.org/t3m/spherogram
   - cd spherogram
   - "%PYTHON%\\python.exe setup.py release --install"
   - cd ..
 
   # SnapPy
-  - hg clone http://bitbucket.org/t3m/snappy
-  - cd spherogram
+  - hg clone https://bitbucket.org/t3m/snappy
+  - cd snappy
   - "%PYTHON%\\python.exe setup.py release --install"
   - cd ..
   
