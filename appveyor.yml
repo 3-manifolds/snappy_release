@@ -15,8 +15,6 @@ environment:
 build: off
 
 
-sys.getwindowsversion(major=6, minor=2, build=9200, platform=2, service_pack='')
-
 install:
   - '%PYTHON%\\python.exe -c "import sys; print(sys.maxsize())"'
   #- "%PYTHON%\\python.exe -m pip install --upgrade pip setuptools six cython sphinx wheel"
