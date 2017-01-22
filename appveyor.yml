@@ -16,9 +16,10 @@ build: off
 
 
 install:
-  - '%PYTHON%\\python.exe -c "import sys; print(sys.maxsize)"'
-  #- "%PYTHON%\\python.exe -m pip install --upgrade pip setuptools six cython sphinx wheel"
-  #- "%PYTHON%\\python.exe -m pip install --upgrade decorator FXrays cypari networkx pypng ipython"	
+  - "%PYTHON%\\python.exe -m pip install --upgrade pip setuptools six cython sphinx wheel future"
+  - "%PYTHON%\\python.exe -m pip install --upgrade decorator FXrays cypari networkx pypng ipython"
+  - '%PYTHON%\\python.exe -c "import tkinter; print(tkinter.TkVersion)"'
+
 
   #PLink
   #- hg clone https://bitbucket.org/t3m/plink
