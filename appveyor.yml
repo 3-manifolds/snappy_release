@@ -4,9 +4,9 @@ environment:
     # http://www.appveyor.com/docs/installed-software#python
 
     - PYTHON: "C:\\Python27"
-    - PYTHON: "C:\\Python27-x64"
-    - PYTHON: "C:\\Python34"
-    - PYTHON: "C:\\Python34-x64"
+    #- PYTHON: "C:\\Python27-x64"
+    #- PYTHON: "C:\\Python34"
+    #- PYTHON: "C:\\Python34-x64"
     #- PYTHON: "C:\\Python35"
     #- PYTHON: "C:\\Python35-x64"
     #- PYTHON: "C:\\Python36"
@@ -21,23 +21,23 @@ install:
   - '%PYTHON%\\python.exe -c "import tkinter; print(tkinter.TkVersion)"'
 
 
-  #PLink
-  #- hg clone https://bitbucket.org/t3m/plink
-  #- cd plink
-  #- "%PYTHON%\\python.exe setup.py release --install"
-  #- cd ..
+  PLink
+  - hg clone https://bitbucket.org/t3m/plink
+  - cd plink
+  - "%PYTHON%\\python.exe setup.py release --install"
+  - cd ..
 
   # Spherogram
-  #- hg clone https://bitbucket.org/t3m/spherogram
-  #- cd spherogram
-  #- "%PYTHON%\\python.exe setup.py release --install"
-  #- cd ..
+  - hg clone https://bitbucket.org/t3m/spherogram
+  - cd spherogram
+  - "%PYTHON%\\python.exe setup.py release --install"
+  - cd ..
 
   # SnapPy
-  #- hg clone https://bitbucket.org/t3m/snappy
-  #- cd snappy
-  #- "%PYTHON%\\python.exe setup.py release --install"
-  #- cd ..
+  - hg clone https://bitbucket.org/t3m/snappy
+  - cd snappy
+  - "%PYTHON%\\python.exe setup.py release --install"
+  - cd ..
   
 
 artifacts:
