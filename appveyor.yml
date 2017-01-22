@@ -21,7 +21,7 @@ install:
   - '%PYTHON%\\python.exe -c "import tkinter; print(tkinter.TkVersion)"'
 
 
-  PLink
+  # PLink
   - hg clone https://bitbucket.org/t3m/plink
   - cd plink
   - "%PYTHON%\\python.exe setup.py release --install"
