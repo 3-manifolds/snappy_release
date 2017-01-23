@@ -31,10 +31,10 @@ install:
   #- hg clone https://bitbucket.org/t3m/spherogram
   #- cd spherogram
   #- "%PYTHON%\\python.exe setup.py release --install"
-  - cd ..
+  #- cd ..
 
   # SnapPy
-  - hg clone https://bitbucket.org/t3m/snappy
+  #- hg clone https://bitbucket.org/t3m/snappy
   - cp togl\win-tk8.6
   - make-togl.bat
   #- "%PYTHON%\\python.exe setup.py release --install"
