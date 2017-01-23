@@ -3,10 +3,10 @@ environment:
     # For Python versions available on Appveyor, see
     # http://www.appveyor.com/docs/installed-software#python
 
-    #- PYTHON: "C:\\Python27"
-    #- PYTHON: "C:\\Python27-x64"
+    - PYTHON: "C:\\Python27"
+    - PYTHON: "C:\\Python27-x64"
     - PYTHON: "C:\\Python34"
-    - PYTHON: "C:\\Python34-x64"
+    #- PYTHON: "C:\\Python34-x64"
     #- PYTHON: "C:\\Python35"
     #- PYTHON: "C:\\Python35-x64"
     #- PYTHON: "C:\\Python36"
@@ -16,29 +16,30 @@ build: off
 
 
 install:
-  #- "%PYTHON%\\python.exe -m pip install --upgrade pip setuptools six cython sphinx wheel future"
-  #- "%PYTHON%\\python.exe -m pip install --upgrade decorator FXrays cypari networkx pypng ipython"
-  #- '%PYTHON%\\python.exe -c "import tkinter; print(tkinter.TkVersion)"'
+  - "%PYTHON%\\python.exe -m pip install --upgrade pip setuptools six cython sphinx wheel future"
+  - "%PYTHON%\\python.exe -m pip install --upgrade decorator FXrays cypari networkx pypng ipython"
+  - '%PYTHON%\\python.exe -c "import tkinter; print(tkinter.TkVersion)"'
 
+  # Togl
+  #- cd togl\win-tk8.6
+  #- make-togl.bat
 
   # PLink
-  #- hg clone https://bitbucket.org/t3m/plink
-  #- cd plink
-  #- "%PYTHON%\\python.exe setup.py release --install"
-  #- cd ..
+  - hg clone https://bitbucket.org/t3m/plink
+  - cd plink
+  - "%PYTHON%\\python.exe setup.py release --install"
+  - cd ..
 
   # Spherogram
-  #- hg clone https://bitbucket.org/t3m/spherogram
-  #- cd spherogram
-  #- "%PYTHON%\\python.exe setup.py release --install"
-  #- cd ..
+  - hg clone https://bitbucket.org/t3m/spherogram
+  - cd spherogram
+  - "%PYTHON%\\python.exe setup.py release --install"
+  - cd ..
 
   # SnapPy
-  #- hg clone https://bitbucket.org/t3m/snappy
-  - cd togl\win-tk8.6
-  - make-togl.bat
-  #- "%PYTHON%\\python.exe setup.py release --install"
-  #- cd ..
+  - hg clone https://bitbucket.org/t3m/snappy
+  - "%PYTHON%\\python.exe setup.py release --install"
+  - cd ..
   
 
 artifacts:
