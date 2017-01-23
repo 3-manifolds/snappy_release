@@ -35,7 +35,7 @@ install:
 
   # SnapPy
   #- hg clone https://bitbucket.org/t3m/snappy
-  - cp togl\win-tk8.6
+  - cd togl\win-tk8.6
   - make-togl.bat
   #- "%PYTHON%\\python.exe setup.py release --install"
   #- cd ..
