@@ -38,6 +38,7 @@ install:
 
   # SnapPy
   - hg clone https://bitbucket.org/t3m/snappy
+  - cd snappy
   - "%PYTHON%\\python.exe setup.py release --install"
   - cd ..
   
