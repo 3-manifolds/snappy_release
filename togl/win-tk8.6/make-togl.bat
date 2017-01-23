@@ -10,7 +10,7 @@ if "%1"=="" (set target=Togl) else (set target=%1)
 
 @rem This is the standard install directory for VC for Python27
 @rem If you move it, change this.
-set VCFORPYTHONLONG=C:\Program Files (x86)\Microsoft Visual Studio 10.0\
+set VCFORPYTHONLONG=C:\Program Files (x86)\Microsoft Visual Studio 12.0\
 @rem set VCFORPYTHONLONG=C:\Users/Nathan Dunfield\AppData\Local\Programs\Common\Microsoft\Visual C++ for Python\9.0
 
 @rem Build the short path to the VC directory
