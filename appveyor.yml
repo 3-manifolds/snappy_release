@@ -16,28 +16,29 @@ build: off
 
 
 install:
-  - "%PYTHON%\\python.exe -m pip install --upgrade pip setuptools six cython sphinx wheel future"
-  - "%PYTHON%\\python.exe -m pip install --upgrade decorator FXrays cypari networkx pypng ipython"
-  - '%PYTHON%\\python.exe -c "import tkinter; print(tkinter.TkVersion)"'
+  #- "%PYTHON%\\python.exe -m pip install --upgrade pip setuptools six cython sphinx wheel future"
+  #- "%PYTHON%\\python.exe -m pip install --upgrade decorator FXrays cypari networkx pypng ipython"
+  #- '%PYTHON%\\python.exe -c "import tkinter; print(tkinter.TkVersion)"'
 
 
   # PLink
-  - hg clone https://bitbucket.org/t3m/plink
-  - cd plink
-  - "%PYTHON%\\python.exe setup.py release --install"
-  - cd ..
+  #- hg clone https://bitbucket.org/t3m/plink
+  #- cd plink
+  #- "%PYTHON%\\python.exe setup.py release --install"
+  #- cd ..
 
   # Spherogram
-  - hg clone https://bitbucket.org/t3m/spherogram
-  - cd spherogram
-  - "%PYTHON%\\python.exe setup.py release --install"
+  #- hg clone https://bitbucket.org/t3m/spherogram
+  #- cd spherogram
+  #- "%PYTHON%\\python.exe setup.py release --install"
   - cd ..
 
   # SnapPy
   - hg clone https://bitbucket.org/t3m/snappy
-  - cd snappy
-  - "%PYTHON%\\python.exe setup.py release --install"
-  - cd ..
+  - cd snappy\opengl\Togl2.1-SnapPy\win-tk8.6
+  - make-togl.bat
+  #- "%PYTHON%\\python.exe setup.py release --install"
+  #- cd ..
   
 
 artifacts:
