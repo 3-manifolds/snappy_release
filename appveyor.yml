@@ -3,8 +3,8 @@ environment:
     # For Python versions available on Appveyor, see
     # http://www.appveyor.com/docs/installed-software#python
 
-    - PYTHON: "C:\\Python27"
-    - PYTHON: "C:\\Python27-x64"
+    #- PYTHON: "C:\\Python27"
+    #- PYTHON: "C:\\Python27-x64"
     - PYTHON: "C:\\Python34"
     #- PYTHON: "C:\\Python34-x64"
     #- PYTHON: "C:\\Python35"
@@ -39,7 +39,8 @@ install:
   # SnapPy
   - hg clone https://bitbucket.org/t3m/snappy
   - cd snappy
-  - "%PYTHON%\\python.exe setup.py release --install"
+  - "#%PYTHON%\\python.exe setup.py build"
+  - "#%PYTHON%\\python.exe setup.py bdist_wheel"
   - cd ..
   
 
