@@ -39,8 +39,8 @@ install:
   # SnapPy
   - hg clone https://bitbucket.org/t3m/snappy
   - cd snappy
-  - "#%PYTHON%\\python.exe setup.py build"
-  - "#%PYTHON%\\python.exe setup.py bdist_wheel"
+  - "%PYTHON%\\python.exe setup.py build"
+  - "%PYTHON%\\python.exe setup.py bdist_wheel"
   - cd ..
   
 
