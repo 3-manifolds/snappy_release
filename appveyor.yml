@@ -40,7 +40,9 @@ install:
   - hg clone https://bitbucket.org/t3m/snappy
   - cd snappy
   - "%PYTHON%\\python.exe setup.py release --install"
-  - cd ..
+  - cd windows_exe
+  - "%PYTHON%\\python.exe make.py"
+  - cd ..\..
   
 
 artifacts:
