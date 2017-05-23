@@ -17,7 +17,7 @@ build: off
 
 install:
   - "%PYTHON%\\python.exe -m pip install --upgrade pip setuptools six cython sphinx wheel future"
-  - '%PYTHON%\\python.exe -m pip install --upgrade decorator FXrays cypari networkx pypng 
+  - '%PYTHON%\\python.exe -m pip install --upgrade decorator FXrays cypari networkx pypng'
   - '%PYTHON%\\python.exe -m pip install https://bitbucket.org/nathan_dunfield/pyinstaller_windows/downloads/PyInstaller-3.3.dev0+ga98be396.mod-py2-none-any.whl'
   - '%PYTHON%\\python.exe -c "import tkinter; print(tkinter.TkVersion)"'
   - set PATH=%PATH%;"C:\\Program Files (x86)\\Inno Setup 5"
