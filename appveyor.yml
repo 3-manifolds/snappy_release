@@ -42,8 +42,11 @@ install:
   - cd ..
 
   # SnapPy
-  - hg clone https://bitbucket.org/t3m/snappy
-  - cd snappy
+  #- hg clone https://bitbucket.org/t3m/snappy
+  #- cd snappy
+  - curl -O https://bitbucket.org/t3m/snappy/get/tip.zip
+  - unzip tip.zip
+  - cd t3m-snappy-*
   - "%PYTHON%\\python.exe setup.py release --install"
   - cd windows_exe
   - "%PYTHON%\\python.exe make.py"
