@@ -3,7 +3,7 @@ environment:
     # For Python versions available on Appveyor, see
     # http://www.appveyor.com/docs/installed-software#python
 
-    #- PYTHON: "C:\\Python27"
+    - PYTHON: "C:\\Python27"
     #- PYTHON: "C:\\Python27-x64"
     #- PYTHON: "C:\\Python34"
     #- PYTHON: "C:\\Python34-x64"
@@ -46,6 +46,9 @@ install:
   - cd snappy
   - "%PYTHON%\\python.exe setup.py release --install"
   - cd windows_exe
+  - cd vc_redist_installers
+  - "%PYTHON%\\python.exe fetch_installers.py"
+  - cd ..
   - "%PYTHON%\\python.exe make.py"
   - cd ..\..
   
