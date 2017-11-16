@@ -20,8 +20,10 @@ install:
   - '%PYTHON%\\python.exe -m pip install --upgrade FXrays cypari snappy_manifolds networkx pypng'
   - 'C:\\Python27\\python.exe -m pip install "pyx<0.13" "ipython<6.0"'
   - 'C:\\Python36\\python.exe -m pip install pyx ipython'
-  - 'C:\\Python27\\python.exe -m pip install https://bitbucket.org/nathan_dunfield/pyinstaller_windows/downloads/PyInstaller-3.3.dev0+ga98be396.mod-py2-none-any.whl'
-  - 'C:\\Python36\\python.exe -m pip install https://bitbucket.org/nathan_dunfield/pyinstaller_windows/downloads/PyInstaller-3.3.dev0+ga98be396.mod-py3-none-any.whl'
+  # Hoping we don't need these anymore
+  #- 'C:\\Python27\\python.exe -m pip install https://bitbucket.org/nathan_dunfield/pyinstaller_windows/downloads/PyInstaller-3.3.dev0+ga98be396.mod-py2-none-any.whl'
+  #- 'C:\\Python36\\python.exe -m pip install https://bitbucket.org/nathan_dunfield/pyinstaller_windows/downloads/PyInstaller-3.3.dev0+ga98be396.mod-py3-none-any.whl'
+  - '%PYTHON%\\python.exe -m pip install "PyInstaller==3.3"'
   - '%PYTHON%\\python.exe -c "import tkinter; print(tkinter.TkVersion)"'
   - set PATH=%PATH%;"C:\\Program Files (x86)\\Inno Setup 5"
   
