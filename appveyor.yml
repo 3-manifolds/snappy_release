@@ -42,6 +42,9 @@ install:
   - cd snappy_manifolds
   - "%PYTHON%\\python.exe setup.py release --install"
   - cd ..
+  - "%PYTHON%\\python.exe -m snappy_manifolds.test"
+  - '%PYTHON%\\python.exe -c "import snappy_manifolds; print(snappy_manifolds.__version__)"'
+
   
   # Spherogram
   - hg clone https://bitbucket.org/t3m/spherogram
