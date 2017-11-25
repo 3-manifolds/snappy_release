@@ -58,6 +58,8 @@ install:
   - "%PYTHON%\\python.exe setup.py release --install"
   - cd windows_exe
   - "%PYTHON%\\python.exe make.py"
+  - "%PYTHON%\\python.exe -m snappy.test"
+
 
 artifacts:
   - path: plink\dist\*.tar.gz
