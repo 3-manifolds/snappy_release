@@ -55,7 +55,7 @@ install:
   - "%PYTHON%\\python.exe setup.py release --install"
   - cd ..
   - "%PYTHON%\\python.exe -m snappy_15_knots.test"
-  - '%PYTHON%\\python.exe -c "import snappy_15_knots; print(snappy_manifolds.__version__)"'
+  - '%PYTHON%\\python.exe -c "import snappy_15_knots; print(snappy_15_knots.__version__)"'
   
   # Spherogram
   - git clone https://github.com/3-manifolds/spherogram
