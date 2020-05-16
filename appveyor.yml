@@ -3,8 +3,8 @@ environment:
     # For Python versions available on Appveyor, see
     # http://www.appveyor.com/docs/installed-software#python
 
-    - PYTHON: "C:\\Python37"
     - PYTHON: "C:\\Python27"
+    - PYTHON: "C:\\Python38"
     #- PYTHON: "C:\\Python27-x64"
     #- PYTHON: "C:\\Python34"
     #- PYTHON: "C:\\Python34-x64"
@@ -36,28 +36,35 @@ install:
   #- make-togl.bat
 
   # PLink
-  - hg clone https://bitbucket.org/t3m/plink
+  - git clone https://github.com/3-manifolds/plink
   - cd plink
   - "%PYTHON%\\python.exe setup.py release --install"
   - cd ..
 
   # snappy_manifolds
-  - hg clone https://bitbucket.org/t3m/snappy_manifolds
+  - git clone https://github.com/3-manifolds/snappy_manifolds
   - cd snappy_manifolds
   - "%PYTHON%\\python.exe setup.py release --install"
   - cd ..
   - "%PYTHON%\\python.exe -m snappy_manifolds.test"
   - '%PYTHON%\\python.exe -c "import snappy_manifolds; print(snappy_manifolds.__version__)"'
 
+  # snappy_15_knots
+  - git clone https://github.com/3-manifolds/snappy_15_knots
+  - cd snappy_15_knots
+  - "%PYTHON%\\python.exe setup.py release --install"
+  - cd ..
+  - "%PYTHON%\\python.exe -m snappy_15_knots.test"
+  - '%PYTHON%\\python.exe -c "import snappy_15_knots; print(snappy_manifolds.__version__)"'
   
   # Spherogram
-  - hg clone https://bitbucket.org/t3m/spherogram
+  - git clone https://github.com/3-manifolds/spherogram
   - cd spherogram
   - "%PYTHON%\\python.exe setup.py release --install"
   - cd ..
 
   # SnapPy
-  - hg clone https://bitbucket.org/t3m/snappy
+  - git clone https://github.com/3-manifolds/snappy
   - cd snappy
   - "%PYTHON%\\python.exe setup.py release --install"
   - cd windows_exe
