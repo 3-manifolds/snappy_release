@@ -7,7 +7,7 @@ environment:
     #
     # Note these are also hard-coded in the "install" section below.
 
-    - PYTHON: "C:\\Python39"
+    - PYTHON: "C:\\Python38"
 
 build: off
 
