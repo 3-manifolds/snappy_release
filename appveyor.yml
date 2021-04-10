@@ -1,3 +1,5 @@
+image: Visual Studio 2019
+
 environment:
   matrix:
     # For Python versions available on Appveyor, see
@@ -5,7 +7,7 @@ environment:
     #
     # Note these are also hard-coded in the "install" section below.
 
-    - PYTHON: "C:\\Python38"
+    - PYTHON: "C:\\Python39"
 
 build: off
 
