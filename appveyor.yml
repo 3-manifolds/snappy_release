@@ -49,7 +49,6 @@ install:
   # SnapPy
   - git clone https://github.com/3-manifolds/snappy
   - cd snappy
-  - "%PYTHON%\\python.exe setup.py build_all"
   - "%PYTHON%\\python.exe setup.py pip_install"
   - cd windows_exe
   - "%PYTHON%\\python.exe make.py"
