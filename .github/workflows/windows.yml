@@ -13,7 +13,7 @@ jobs:
         uses: actions/setup-python@v2
         with:
           python-version: '3.9'
-          architecture: 'x64'
+          architecture: 'x86'   # 32bit because of comment in "windows_exe/make.py".
 
       - name: Install packages
         run: |
