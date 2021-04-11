@@ -41,5 +41,5 @@ jobs:
 
       - name: Build the installer
         run: |
-          cd windows_exe
+          cd snappy/windows_exe
           python make.py
