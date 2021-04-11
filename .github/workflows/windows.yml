@@ -17,9 +17,9 @@ jobs:
 
       - name: Install packages
         run: |
-          python -m pip install cython sphinx wheel decorator
+          python -m pip install cython sphinx wheel decorator PyInstaller
           python -m pip install FXrays cypari knot_floer_homology
-          
+
 
       - name: Install PLink
         run: python -m pip install https://github.com/3-manifolds/PLink/archive/master.zip
@@ -31,7 +31,15 @@ jobs:
         run: python -m pip install https://github.com/3-manifolds/spherogram/archive/master.zip
 
       - name: Install snappy
-        run: python -m pip install https://github.com/3-manifolds/snappy/archive/master.zip
+        run: |
+          git clone https://github.com/3-manifolds/snappy/
+          cd snappy
+          python setup.py pip_install
 
       - name: Do the tests
-        run: python -m snappy.test
+        run: python -m snappy.test --skip-modern-opengl
+
+      - name: Build the installer
+        run: |
+          cd windows_exe
+          python make.py
