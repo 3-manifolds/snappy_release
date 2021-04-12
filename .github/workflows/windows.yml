@@ -44,3 +44,7 @@ jobs:
         run: |
           cd snappy/windows_exe
           python make.py
+
+      - uses: actions/upload-artifact@v2
+        with:
+          path: snappy/windows_exe/InstallSnapPy*.exe
