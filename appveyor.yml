@@ -14,7 +14,7 @@ install:
   - "%PYTHON%\\python.exe -m pip install --upgrade pip setuptools six cython sphinx wheel future decorator"
   - '%PYTHON%\\python.exe -m pip install --upgrade FXrays cypari knot_floer_homology'
   - '%PYTHON%\\python.exe -m pip install --upgrade networkx pyx ipython'
-  - '%PYTHON%\\python.exe -m pip install "PyInstaller"'
+  - '%PYTHON%\\python.exe -m pip install "PyInstaller==4.2"'
   - '%PYTHON%\\python.exe -c "import tkinter; print(tkinter.TkVersion)"'
   - set PATH=%PATH%;"C:\\Program Files (x86)\\Inno Setup 5"
   
