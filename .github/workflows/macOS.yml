@@ -8,15 +8,6 @@ jobs:
     runs-on: macos-11
 
     steps:
-      - name: Download Framework
-        uses: dawidd6/action-download-artifact@v2
-        with:
-          github_token: ${{secrets.GITHUB_TOKEN}}
-          repo: 3-manifolds/frameworks
-          workflow: build_py2app.yml
-          workflow_conclusion: success
-          name: Frameworks.tgz
-          path: .
       
       - name: Setup Python
         uses: actions/setup-python@v2
@@ -45,8 +36,17 @@ jobs:
           cd snappy
           python setup.py pip_install
 
-      - name: Do the tests
-        run: python -m snappy.test --skip-modern-opengl
+      # - name: Do the tests
+      #  run: python -m snappy.test --skip-modern-opengl
+      - name: Download Framework
+        uses: dawidd6/action-download-artifact@v2
+        with:
+          github_token: ${{secrets.GITHUB_TOKEN}}
+          repo: 3-manifolds/frameworks
+          workflow: build_py2app.yml
+          workflow_conclusion: success
+          name: Frameworks.tgz
+          path: snappy/mac_osx_app
 
       - name: Build the installer
         run: |
