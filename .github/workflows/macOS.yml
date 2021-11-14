@@ -1,23 +1,31 @@
-name: Windows
+name: macOS
 
-on: [push, pull_request]
-
+on: [push]
 
 jobs:
-  Windows:
-    name: Build Windows installer
-    runs-on: windows-latest
+  build_app:
+    name: Build and sign macOS app
+    runs-on: macos-11
 
     steps:
+      - name: Download Framework
+        uses: dawidd6/action-download-artifact@v2
+        with:
+          github_token: ${{secrets.GITHUB_TOKEN}}
+          # Required, workflow file name or ID
+          workflow: workflow_name.yml
+          workflow_conclusion: success
+          name: Frameworks.tar.gz
+          path: .
+      
       - name: Setup Python
         uses: actions/setup-python@v2
         with:
-          python-version: '3.9'
-          architecture: 'x86'   # 32bit because of comment in "windows_exe/make.py".
+          python-version: '3.10'
 
       - name: Install packages
         run: |
-          python -m pip install cython sphinx wheel pyx "PyInstaller==4.2"
+          python -m pip install cython sphinx wheel pyx py2app
           python -m pip install FXrays cypari knot_floer_homology
 
       - name: Install PLink
@@ -42,9 +50,9 @@ jobs:
 
       - name: Build the installer
         run: |
-          cd snappy/windows_exe
-          python make.py
+          cd snappy/mac_osx_app
+          python release.py
 
       - uses: actions/upload-artifact@v2
         with:
-          path: snappy/windows_exe/InstallSnapPy*.exe
+          path: snappy/mac_osx_app/SnapPy.dmg
