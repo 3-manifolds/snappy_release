@@ -15,7 +15,7 @@ jobs:
           repo: 3-manifolds/frameworks
           workflow: build_py2app.yml
           workflow_conclusion: success
-          name: Frameworks.tar.gz
+          name: Frameworks.tgz
           path: .
       
       - name: Setup Python
