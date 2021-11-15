@@ -67,4 +67,5 @@ jobs:
 
       - uses: actions/upload-artifact@v2
         with:
-          path: snappy/mac_osx_app/SnapPy.dmg
+          name: SnapPy.dmg
+          path: snappy/mac_osx_app/disk_images/SnapPy.dmg
