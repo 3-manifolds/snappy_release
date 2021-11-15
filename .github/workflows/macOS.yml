@@ -6,11 +6,11 @@ jobs:
   build_app:
     name: Build and sign macOS app
     runs-on: macos-11
-
+    env: |
+      PYTHON: /Library/Frameworks/Python.framework/Versions/3.10/bin/python
+      
     steps:
-      env: |
-        PYTHON: /Library/Frameworks/Python.framework/Versions/3.10/bin/python
-        
+       
       - name: Install Python
         env: |
           PYTHON_URL: https://www.python.org/ftp/python/3.10.0/python-3.10.0post2-macos11.pkg
