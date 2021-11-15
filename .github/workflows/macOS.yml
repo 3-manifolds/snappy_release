@@ -40,8 +40,6 @@ jobs:
 
           # Create file needed release.py
           echo -e "[developer]\nidentify = $DEV_ID"  > notabot.cfg
-
-          
        
       - name: Install Python
         env:
@@ -72,8 +70,7 @@ jobs:
       - name: Install snappy
         run: |
           git clone https://github.com/3-manifolds/snappy/
-          cd snappy
-          mv notabot.cfg snappy/mac_osx_app
+          cd snappy 
           $PYTHON setup.py pip_install
 
       - name: Do the tests
@@ -92,6 +89,7 @@ jobs:
 
       - name: Build the installer
         run: |
+          cp notabot.cfg snappy/mac_osx_app
           cd snappy/mac_osx_app
           $PYTHON release.py
 
