@@ -8,6 +8,9 @@ jobs:
     runs-on: macos-11
     env:
       PYTHON: /Library/Frameworks/Python.framework/Versions/3.10/bin/python3
+      _PYTHON_HOST_PLATFORM: macosx-10.9-x86_64
+      ARCHFLAGS: "-arch x86_64"
+
       
     steps:
        
