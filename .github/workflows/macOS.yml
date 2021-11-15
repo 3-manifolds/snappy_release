@@ -39,7 +39,7 @@ jobs:
           security list-keychain -d user -s $KEYCHAIN_PATH
 
           # Create file needed release.py
-          echo -e "[developer]\nidentify = $DEV_ID"  > notabot.cfg
+          echo -e "[developer]\nidentity = $DEV_ID"  > notabot.cfg
        
       - name: Install Python
         env:
