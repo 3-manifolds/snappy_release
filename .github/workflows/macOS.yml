@@ -9,7 +9,7 @@ jobs:
 
     steps:
       env: |
-        $PYTHON: /Library/Frameworks/Python.framework/Versions/3.10/bin/python
+        PYTHON: /Library/Frameworks/Python.framework/Versions/3.10/bin/python
         
       - name: Install Python
         env: |
