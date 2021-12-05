@@ -11,7 +11,7 @@ jobs:
       _PYTHON_HOST_PLATFORM: macosx-10.9-x86_64
       ARCHFLAGS: "-arch x86_64"
 
-      
+
     steps:
 
       - name: Install the Apple certificate and provisioning profile
@@ -20,6 +20,8 @@ jobs:
           P12_PASSWORD: ${{ secrets.P12_PASSWORD }}
           KEYCHAIN_PASSWORD: ${{ secrets.KEYCHAIN_PASSWORD }}
           DEV_ID: ${{ secrets.DEV_ID }}
+          DEV_USERNAME: ${{ secrets.NOTARIZE_USERNAME }}
+          DEV_PASSWORD: ${{ secrets.NOTARIZE_PASSWORD }}
         run: |
           # create variables
           CERTIFICATE_PATH=$RUNNER_TEMP/build_certificate.p12
@@ -40,7 +42,14 @@ jobs:
 
           # Create file needed release.py
           echo -e "[developer]\nidentity = $DEV_ID"  > notabot.cfg
-       
+          echo -e "username = $DEV_USERNAME"  >> notabot.cfg
+          echo -e "password = $DEV_PASSWORD\n"  >> notabot.cfg
+          echo -e "[app]\napp_name = SnapPy" >> notabot.cfg
+          echo -e "app_path = dist/SnapPy.app" >> notabot.cfg
+          echo -e "dmg_path = disk_images/SnapPy.dmg" >> notabot.cfg
+          echo -e "bundle_id = SnapPy-3.0" >> notabot.cfg
+
+
       - name: Install Python
         env:
           PYTHON_URL: https://www.python.org/ftp/python/3.10.0/python-3.10.0post2-macos11.pkg
@@ -53,6 +62,7 @@ jobs:
         run: |
           $PYTHON -m pip install cython sphinx wheel pyx py2app
           $PYTHON -m pip install FXrays cypari knot_floer_homology
+          $PYTHON -m pip install https://github.com/3-manifolds/notary/archive/master.zip
 
       - name: Install PLink
         run: |
@@ -70,13 +80,13 @@ jobs:
       - name: Install snappy
         run: |
           git clone https://github.com/3-manifolds/snappy/
-          cd snappy 
+          cd snappy
           $PYTHON setup.py pip_install
 
       - name: Do the tests
         run: |
           $PYTHON -m snappy.test --skip-modern-opengl
-      
+
       - name: Download Framework
         uses: dawidd6/action-download-artifact@v2
         with:
@@ -92,6 +102,11 @@ jobs:
           cp notabot.cfg snappy/mac_osx_app
           cd snappy/mac_osx_app
           $PYTHON release.py
+
+      - name: Notarize
+        run: |
+          cd snappy/mac_osx_app
+          $PYTHON notarize_snappy.py
 
       - uses: actions/upload-artifact@v2
         with:
