@@ -47,7 +47,7 @@ jobs:
           echo -e "[app]\napp_name = SnapPy" >> notabot.cfg
           echo -e "app_path = dist/SnapPy.app" >> notabot.cfg
           echo -e "dmg_path = disk_images/SnapPy.dmg" >> notabot.cfg
-          echo -e "bundle_id = SnapPy-3.0" >> notabot.cfg
+          # echo -e "bundle_id = SnapPy-autoset-below" >> notabot.cfg
 
 
       - name: Install Python
@@ -82,6 +82,8 @@ jobs:
           git clone https://github.com/3-manifolds/snappy/
           cd snappy
           $PYTHON setup.py pip_install
+          cd ..
+          echo "bundle_id = SnapPy-`python -c "import snappy; print(snappy.__version__)"`" >> notabot.cfg
 
       - name: Do the tests
         run: |
