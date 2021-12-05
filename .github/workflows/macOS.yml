@@ -83,7 +83,7 @@ jobs:
           cd snappy
           $PYTHON setup.py pip_install
           cd ..
-          echo "bundle_id = SnapPy-`python -c "import snappy; print(snappy.__version__)"`" >> notabot.cfg
+          echo "bundle_id = SnapPy-`$PYTHON -c "import snappy; print(snappy.__version__)"`" >> notabot.cfg
 
       - name: Do the tests
         run: |
