@@ -62,7 +62,7 @@ jobs:
         run: |
           $PYTHON -m pip install cython sphinx wheel pyx py2app
           $PYTHON -m pip install FXrays cypari knot_floer_homology
-          $PYTHON -m pip install https://github.com/3-manifolds/notary/archive/master.zip
+          $PYTHON -m pip install https://github.com/3-manifolds/notary/archive/main.zip
 
       - name: Install PLink
         run: |
