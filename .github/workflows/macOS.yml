@@ -8,8 +8,8 @@ jobs:
     runs-on: macos-11
     env:
       PYTHON: /Library/Frameworks/Python.framework/Versions/3.10/bin/python3
-      _PYTHON_HOST_PLATFORM: macosx-10.9-x86_64
-      ARCHFLAGS: "-arch x86_64"
+      _PYTHON_HOST_PLATFORM: macosx-11-universal2
+      ARCHFLAGS: "-arch x86_64 -arch arm64"
 
 
     steps:
@@ -52,7 +52,7 @@ jobs:
 
       - name: Install Python
         env:
-          PYTHON_URL: https://www.python.org/ftp/python/3.10.0/python-3.10.0post2-macos11.pkg
+          PYTHON_URL: https://www.python.org/ftp/python/3.10.1/python-3.10.1-macos11.pkg
         run: |
           wget $PYTHON_URL -O /tmp/Python.pkg
           sudo installer -pkg /tmp/Python.pkg -target /
