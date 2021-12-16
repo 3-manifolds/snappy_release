@@ -77,11 +77,26 @@ jobs:
         run: |
           $PYTHON -m pip install https://github.com/3-manifolds/spherogram/archive/master.zip
 
-      - name: Install snappy
+      - name: Build snappy (x86_64)
+        env:
+          _PYTHON_HOST_PLATFORM: macosx-10.9-x86_64
+          ARCHFLAGS: "-arch x86_64"
         run: |
           git clone https://github.com/3-manifolds/snappy/
           cd snappy
-          $PYTHON setup.py pip_install
+          $PYTHON setup.py bdist_wheel
+
+      - name: Build snappy (arm64)
+        env:
+          _PYTHON_HOST_PLATFORM: macosx-11-arm64
+          ARCHFLAGS: "-arch arm64"
+        run: |
+          $PYTHON setup.py bdist_wheel
+
+      - name: Install snappy
+        run: |
+          dev/release_tools/merge_into_universal2 dist
+          $PYTHON -m pip install merged_wheels/snappy*.whl
           cd ..
           echo "bundle_id = SnapPy-`$PYTHON -c "import snappy; print(snappy.__version__)"`" >> notabot.cfg
 
