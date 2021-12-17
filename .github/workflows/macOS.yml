@@ -101,6 +101,7 @@ jobs:
 
       - name: Install snappy
         run: |
+          $PATH=/Library/Frameworks/Python.framework/Versions/Current/bin:$PATH
           cd snappy
           dev/release_tools/merge_into_universal2 dist
           $PYTHON -m pip install merged_wheels/snappy*.whl
