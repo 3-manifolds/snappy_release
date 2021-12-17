@@ -60,7 +60,7 @@ jobs:
 
       - name: Install packages
         run: |
-          $PYTHON -m pip install cython sphinx wheel pyx py2app
+          $PYTHON -m pip install cython sphinx wheel pyx py2app delocate
           $PYTHON -m pip install https://github.com/3-manifolds/notary/archive/main.zip
 
       - name: Install universal2 wheels
