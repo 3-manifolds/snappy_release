@@ -8,8 +8,8 @@ jobs:
     runs-on: macos-11
     env:
       PYTHON: /Library/Frameworks/Python.framework/Versions/3.10/bin/python3
-      _PYTHON_HOST_PLATFORM: macosx-10.9-x86_64
-      ARCHFLAGS: "-arch x86_64"
+      _PYTHON_HOST_PLATFORM: macosx-10.9-universal2
+      ARCHFLAGS: "-arch x86_64 -arch arm64"
 
 
     steps:
@@ -52,7 +52,7 @@ jobs:
 
       - name: Install Python
         env:
-          PYTHON_URL: https://www.python.org/ftp/python/3.10.0/python-3.10.0post2-macos11.pkg
+          PYTHON_URL: https://www.python.org/ftp/python/3.10.1/python-3.10.1-macos11.pkg
         run: |
           wget $PYTHON_URL -O /tmp/Python.pkg
           sudo installer -pkg /tmp/Python.pkg -target /
@@ -60,9 +60,14 @@ jobs:
 
       - name: Install packages
         run: |
-          $PYTHON -m pip install cython sphinx wheel pyx py2app
-          $PYTHON -m pip install FXrays cypari knot_floer_homology
+          $PYTHON -m pip install cython sphinx wheel pyx py2app delocate
           $PYTHON -m pip install https://github.com/3-manifolds/notary/archive/main.zip
+
+      - name: Install universal2 wheels
+        run: |
+          SITE_PACKAGES=`$PYTHON -c "import site; print(site.getsitepackages()[0])"`
+          STUPID_ARGS="--platform=macosx_10_9_universal2 --only-binary=:all: --target=$SITE_PACKAGES"
+          $PYTHON -m pip install $STUPID_ARGS FXrays cypari knot_floer_homology 
 
       - name: Install PLink
         run: |
@@ -77,12 +82,34 @@ jobs:
         run: |
           $PYTHON -m pip install https://github.com/3-manifolds/spherogram/archive/master.zip
 
-      - name: Install snappy
+      - name: Build snappy (x86_64)
+        env:
+          _PYTHON_HOST_PLATFORM: macosx-10.9-x86_64
+          ARCHFLAGS: "-arch x86_64"
         run: |
           git clone https://github.com/3-manifolds/snappy/
           cd snappy
-          $PYTHON setup.py pip_install
-          cd ..
+          $PYTHON setup.py build -j3
+          $PYTHON setup.py bdist_wheel
+
+      - name: Build snappy (arm64)
+        env:
+          _PYTHON_HOST_PLATFORM: macosx-11-arm64
+          ARCHFLAGS: "-arch arm64"
+        run: |
+          cd snappy
+          $PYTHON setup.py build -j3
+          $PYTHON setup.py bdist_wheel
+
+      - name: Install snappy
+        run: |
+          PATH=/Library/Frameworks/Python.framework/Versions/Current/bin:$PATH
+          cd snappy/dist
+          delocate-wheel snappy-*-macosx_10_9_x86_64.whl
+          delocate-wheel snappy-*-macosx_11_0_arm64.whl
+          delocate-fuse snappy-*-macosx_10_9_x86_64.whl snappy-*-macosx_11_0_arm64.whl
+          $PYTHON -m pip install snappy-*-macosx_10_9_x86_64.whl
+          cd ../..
           echo "bundle_id = SnapPy-`$PYTHON -c "import snappy; print(snappy.__version__)"`" >> notabot.cfg
 
       - name: Do the tests
@@ -103,7 +130,7 @@ jobs:
         run: |
           cp notabot.cfg snappy/mac_osx_app
           cd snappy/mac_osx_app
-          $PYTHON release.py
+          $PYTHON release.py --no-freshen
 
       - name: Notarize
         run: |
