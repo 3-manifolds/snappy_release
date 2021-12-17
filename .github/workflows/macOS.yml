@@ -61,8 +61,13 @@ jobs:
       - name: Install packages
         run: |
           $PYTHON -m pip install cython sphinx wheel pyx py2app
-          $PYTHON -m pip install FXrays cypari knot_floer_homology
           $PYTHON -m pip install https://github.com/3-manifolds/notary/archive/main.zip
+
+      - name: Install universal2 wheels
+        run: |
+          SITE_PACKAGES=`$PYTHON -c "import site; print(site.getsitepackages()[0])"`
+          STUPID_ARGS="--platform=macosx_10_9_universal2 --only-binary=:all: --target=$SITE_PACKAGES"
+          $PYTHON -m pip install $STUPID_ARGS FXrays cypari knot_floer_homology 
 
       - name: Install PLink
         run: |
@@ -91,10 +96,12 @@ jobs:
           _PYTHON_HOST_PLATFORM: macosx-11-arm64
           ARCHFLAGS: "-arch arm64"
         run: |
+          cd snappy
           $PYTHON setup.py bdist_wheel
 
       - name: Install snappy
         run: |
+          cd snappy
           dev/release_tools/merge_into_universal2 dist
           $PYTHON -m pip install merged_wheels/snappy*.whl
           cd ..
