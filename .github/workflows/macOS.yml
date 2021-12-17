@@ -130,7 +130,7 @@ jobs:
         run: |
           cp notabot.cfg snappy/mac_osx_app
           cd snappy/mac_osx_app
-          $PYTHON release.py
+          $PYTHON release.py --no-freshen
 
       - name: Notarize
         run: |
