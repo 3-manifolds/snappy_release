@@ -8,7 +8,7 @@ jobs:
     runs-on: macos-11
     env:
       PYTHON: /Library/Frameworks/Python.framework/Versions/3.10/bin/python3
-      _PYTHON_HOST_PLATFORM: macosx-11-universal2
+      _PYTHON_HOST_PLATFORM: macosx-10.9-universal2
       ARCHFLAGS: "-arch x86_64 -arch arm64"
 
 
@@ -104,10 +104,12 @@ jobs:
       - name: Install snappy
         run: |
           PATH=/Library/Frameworks/Python.framework/Versions/Current/bin:$PATH
-          cd snappy
-          dev/release_tools/merge_into_universal2 dist
-          $PYTHON -m pip install merged_wheels/snappy*.whl
-          cd ..
+          cd snappy/dist
+          delocate-wheel snappy-*-macosx_10_9_x86_64.whl
+          delocate-wheel snappy-*-macosx_11_0_arm64.whl
+          delocate-fuse snappy-*-macosx_10_9_x86_64.whl snappy-*-macosx_11_0_arm64.whl
+          $PYTHON -m pip install snappy-*-macosx_10_9_x86_64.whl
+          cd ../..
           echo "bundle_id = SnapPy-`$PYTHON -c "import snappy; print(snappy.__version__)"`" >> notabot.cfg
 
       - name: Do the tests
