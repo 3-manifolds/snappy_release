@@ -89,6 +89,7 @@ jobs:
         run: |
           git clone https://github.com/3-manifolds/snappy/
           cd snappy
+          $PYTHON setup.py build -j3
           $PYTHON setup.py bdist_wheel
 
       - name: Build snappy (arm64)
@@ -97,11 +98,12 @@ jobs:
           ARCHFLAGS: "-arch arm64"
         run: |
           cd snappy
+          $PYTHON setup.py build -j3
           $PYTHON setup.py bdist_wheel
 
       - name: Install snappy
         run: |
-          $PATH=/Library/Frameworks/Python.framework/Versions/Current/bin:$PATH
+          PATH=/Library/Frameworks/Python.framework/Versions/Current/bin:$PATH
           cd snappy
           dev/release_tools/merge_into_universal2 dist
           $PYTHON -m pip install merged_wheels/snappy*.whl
