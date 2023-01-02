@@ -27,6 +27,13 @@ jobs:
           python setup.py pip_install
           python setup.py sdist
 
+      - name: low_index
+        run: |
+          git clone https://github.com/3-manifolds/low_index
+          cd low_index
+          python -m pip install .
+          python setup.py sdist
+
       - name: manifolds
         run: |
           git clone https://github.com/3-manifolds/snappy_manifolds
@@ -65,5 +72,3 @@ jobs:
             ./plink/dist/*.whl
             ./snappy_manifolds/dist/*.whl
             ./snappy_15_knots/dist/*.whl
-          
-

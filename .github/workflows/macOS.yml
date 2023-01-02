@@ -67,11 +67,15 @@ jobs:
         run: |
           SITE_PACKAGES=`$PYTHON -c "import site; print(site.getsitepackages()[0])"`
           STUPID_ARGS="--platform=macosx_10_9_universal2 --only-binary=:all: --target=$SITE_PACKAGES"
-          $PYTHON -m pip install $STUPID_ARGS FXrays cypari knot_floer_homology 
+          $PYTHON -m pip install $STUPID_ARGS FXrays cypari knot_floer_homology
 
       - name: Install PLink
         run: |
           $PYTHON -m pip install https://github.com/3-manifolds/PLink/archive/master.zip
+
+      - name: Install low_index
+        run: |
+          $PYTHON -m pip install https://github.com/3-manifolds/low_index/archive/master.zip
 
       - name: Install manifolds
         run: |
