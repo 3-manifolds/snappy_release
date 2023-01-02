@@ -10,7 +10,7 @@ jobs:
 
     steps:
       - name: Setup Python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v3
 
       - name: opengl sys package
         run: sudo apt install libglu1-mesa-dev
@@ -58,7 +58,7 @@ jobs:
       - name: test
         run: python -m snappy.test --skip-modern-opengl
 
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v3
         with:
           path: |
             ./*/dist/*.tar.gz

@@ -10,7 +10,7 @@ jobs:
 
     steps:
       - name: Setup Python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v3
         with:
           python-version: '3.9'
           architecture: 'x86'   # 32bit because of comment in "windows_exe/make.py".
@@ -45,6 +45,6 @@ jobs:
           cd snappy/windows_exe
           python make.py
 
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v3
         with:
           path: snappy/windows_exe/InstallSnapPy*.exe
