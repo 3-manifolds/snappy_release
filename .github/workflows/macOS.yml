@@ -60,6 +60,10 @@ jobs:
           name: Frameworks.tgz
           path: snappy/mac_osx_app
 
+      - name: Unpack Frameworks
+        run: |
+          tar xvfz Frameworks.tgz
+
       - name: Install packages
         run: |
           $PYTHON -m pip install --user cython sphinx wheel pyx py2app delocate
@@ -109,7 +113,7 @@ jobs:
 
       - name: Install snappy
         run: |
-          PATH=/Library/Frameworks/Python.framework/Versions/Current/bin:$PATH
+          PATH = Frameworks/Python.framework/Versions/Current/bin:$PATH 
           cd snappy/dist
           delocate-wheel snappy-*-macosx_10_9_x86_64.whl
           delocate-wheel snappy-*-macosx_11_0_arm64.whl
