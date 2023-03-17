@@ -7,7 +7,7 @@ jobs:
     name: Build and sign macOS app
     runs-on: macos-11
     env:
-      PYTHON: Frameworks/Python.framework/Versions/3.11/bin/python3
+      PYTHON: ~/snappy/mac_osx_app/Frameworks/Python.framework/Versions/3.11/bin/python3
       _PYTHON_HOST_PLATFORM: macosx-10.9-universal2
       ARCHFLAGS: "-arch x86_64 -arch arm64"
 
@@ -62,7 +62,9 @@ jobs:
 
       - name: Unpack Frameworks
         run: |
+          cd snappy/mac_osx_app
           tar xvfz Frameworks.tgz
+          cd ../..
 
       - name: Install packages
         run: |
