@@ -18,7 +18,7 @@ jobs:
         run: |
           git clone https://github.com/3-manifolds/snappy/
       
-      - name: Download Frameworks
+      - name: Download stripped frameworks for py2app
         uses: dawidd6/action-download-artifact@v2
         with:
           github_token: ${{secrets.GITHUB_TOKEN}}
@@ -29,15 +29,19 @@ jobs:
           name: Frameworks.tgz
           path: snappy/mac_osx_app
 
-      - name: Unpack the frameworks so we can use our own python
-        env:
-          PYTHONHOME: ${{ github.workspace }}/Frameworks/Python.framework/Versions/Current
+      - name: Download full frameworks for building the app
+        uses: dawidd6/action-download-artifact@v2
+        with:
+          github_token: ${{secrets.GITHUB_TOKEN}}
+          repo: 3-manifolds/frameworks
+          workflow: build_plain.yml
+          workflow_conclusion: success
+          branch: tcltk_87
+          name: Frameworks.tgz
+
+      - name: Unpack the full frameworks so we can use it for building
         run: |
-          tar xfz snappy/mac_osx_app/Frameworks.tgz
-          $OURPYTHON --version
-          pwd
-          ls Frameworks/Python.framework/Versions/Current/lib/python3.11/encodings
-          $OURPYTHON -c "import os; print(os.listdir('.'))"
+          tar xfz Frameworks.tgz
 
       - name: Install the Apple certificate and provisioning profile
         env:
