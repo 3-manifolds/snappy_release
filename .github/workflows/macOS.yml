@@ -50,21 +50,6 @@ jobs:
           echo -e "dmg_path = disk_images/SnapPy.dmg" >> notabot.cfg
           # echo -e "bundle_id = SnapPy-autoset-below" >> notabot.cfg
 
-      - name: Download Framework
-        uses: dawidd6/action-download-artifact@v2
-        with:
-          github_token: ${{secrets.GITHUB_TOKEN}}
-          repo: 3-manifolds/frameworks
-          workflow: build_py2app.yml
-          workflow_conclusion: success
-          branch: tcltk_87
-          name: Frameworks.tgz
-          path: snappy/mac_osx_app
-
-      - name: Unpack Frameworks here so we can use our own python
-        run: |
-          tar xvfz snappy/mac_osx_app/Frameworks.tgz 
-
       - name: Install packages
         run: |
           $PYTHON -m pip install --user cython sphinx wheel pyx py2app delocate
@@ -126,6 +111,21 @@ jobs:
       - name: Do the tests
         run: |
           $PYTHON -m snappy.test --skip-modern-opengl
+
+      - name: Download Framework
+        uses: dawidd6/action-download-artifact@v2
+        with:
+          github_token: ${{secrets.GITHUB_TOKEN}}
+          repo: 3-manifolds/frameworks
+          workflow: build_py2app.yml
+          workflow_conclusion: success
+          branch: tcltk_87
+          name: Frameworks.tgz
+          path: snappy/mac_osx_app
+
+      - name: Unpack Frameworks here so we can use our own python
+        run: |
+          tar xvfz snappy/mac_osx_app/Frameworks.tgz 
 
       - name: Build the installer
         run: |
