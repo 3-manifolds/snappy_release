@@ -33,10 +33,10 @@ jobs:
         run: |
           tar xfz snappy/mac_osx_app/Frameworks.tgz
           # Work around weird bug with the prefix of the framework python 
-          mkdir -p ../../frameworks/frameworks/Python3.11
-          ln -s ${{ github.workspace }}/Frameworks ../../frameworks/frameworks/Python3.11/dist
-          echo ls ${{ github.workspace }}/../../frameworks/frameworks/Python-3.11/dist 
-          ls ${{ github.workspace }}/../../frameworks/frameworks/Python-3.11/dist 
+          mkdir -p /Users/runner/work/frameworks/frameworks/Python3.11
+          ln -s ${{ github.workspace }}/Frameworks /Users/runner/work/frameworks/frameworks/Python3.11/dist
+          echo ls /Users/runner/work/frameworks/frameworks/Python-3.11/dist 
+          ls /Users/runner/work/frameworks/frameworks/Python-3.11/dist 
 
       - name: Install the Apple certificate and provisioning profile
         env:
