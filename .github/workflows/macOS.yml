@@ -35,6 +35,7 @@ jobs:
         run: |
           tar xfz snappy/mac_osx_app/Frameworks.tgz
           $OURPYTHON --version
+          ls $PYTHONHOME/lib/python3.11/encodings
           $OURPYTHON -c "import os; print(os.listdir('.'))"
 
       - name: Install the Apple certificate and provisioning profile
