@@ -34,7 +34,7 @@ jobs:
           tar xfz snappy/mac_osx_app/Frameworks.tgz
           # Work around weird bug with the prefix of the framework python 
           mkdir -p ../../frameworks/frameworks/Python3.11
-          ln -s ${{ github.workspace }}/Frameworks ../../frameworks/Python3.11/dist
+          ln -s ${{ github.workspace }}/Frameworks ../../frameworks/frameworks/Python3.11/dist
           echo ls ${{ github.workspace }}/frameworks/frameworks/Python-3.11/dist 
           ls ${{ github.workspace }}/frameworks/frameworks/Python-3.11/dist 
 
