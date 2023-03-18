@@ -8,6 +8,7 @@ jobs:
     runs-on: macos-11
     env:
       PYTHON: ${{ github.workspace }}/Frameworks/Python.framework/Versions/Current/bin/python3
+      PYTHONHOME: ${{ github.workspace }}/Frameworks/Python.framework/Versions/Current
       _PYTHON_HOST_PLATFORM: macosx-10.9-universal2
       ARCHFLAGS: "-arch x86_64 -arch arm64"
 
