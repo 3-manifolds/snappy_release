@@ -30,6 +30,8 @@ jobs:
           path: snappy/mac_osx_app
 
       - name: Unpack the frameworks so we can use our own python
+        env:
+          PYTHONHOME: ${{ github.workspace }}/Frameworks/Python.framework/Versions/Current
         run: |
           tar xfz snappy/mac_osx_app/Frameworks.tgz
           $OURPYTHON --version
@@ -133,6 +135,8 @@ jobs:
           $PYTHON -m snappy.test --skip-modern-opengl
 
       - name: Build the installer
+        env:
+          PYTHONHOME: ${{ github.workspace }}/Frameworks/Python.framework/Versions/Current
         run: |
           cd snappy/mac_osx_app
           $OURPYTHON release.py --no-freshen
