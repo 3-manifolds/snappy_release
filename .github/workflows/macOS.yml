@@ -14,7 +14,6 @@ jobs:
 
 
     steps:
-
       - name: Install the Apple certificate and provisioning profile
         env:
           BUILD_CERTIFICATE_BASE64: ${{ secrets.BUILD_CERTIFICATE_BASE64 }}
@@ -79,7 +78,7 @@ jobs:
         run: |
           $PYTHON -m pip install --user https://github.com/3-manifolds/spherogram/archive/master.zip
 
-      -name: Clone Snappy repo
+      - name: Clone Snappy repo
         run: |
           git clone https://github.com/3-manifolds/snappy/
       
