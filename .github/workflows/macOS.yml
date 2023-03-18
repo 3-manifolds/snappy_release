@@ -32,9 +32,7 @@ jobs:
       - name: Unpack the frameworks so we can use our own python
         run: |
           tar xfz snappy/mac_osx_app/Frameworks.tgz
-          # Work around weird bug with the prefix of the framework python
-          echo listing workspace
-          ls -l
+          $OURPYTHON --version
 
       - name: Work around weird prefix bug
         run: |
