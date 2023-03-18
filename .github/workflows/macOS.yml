@@ -52,7 +52,8 @@ jobs:
 
       - name: Install packages
         run: |
-          $PYTHON -m pip install --user cython sphinx wheel pyx py2app delocate
+          $PYTHON -m pip_install delocate
+          $PYTHON -m pip install --user cython sphinx wheel pyx py2app
           $PYTHON -m pip install --user https://github.com/3-manifolds/notary/archive/main.zip
 
       - name: Install universal2 wheels
@@ -99,6 +100,7 @@ jobs:
 
       - name: Install snappy
         run: |
+          PATH=/Library/Frameworks/Python.framework/Versions/Current/bin:$PATH
           cd snappy/dist
           delocate-wheel snappy-*-macosx_10_9_x86_64.whl
           delocate-wheel snappy-*-macosx_11_0_arm64.whl
@@ -111,7 +113,7 @@ jobs:
         run: |
           $PYTHON -m snappy.test --skip-modern-opengl
 
-      - name: Download Framework
+      - name: Download Frameworks
         uses: dawidd6/action-download-artifact@v2
         with:
           github_token: ${{secrets.GITHUB_TOKEN}}
