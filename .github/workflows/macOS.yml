@@ -72,9 +72,8 @@ jobs:
 
       - name: Install universal2 wheels
         run: |
-          #SITE_PACKAGES=`$PYTHON -c "import site; print(site.getsitepackages()[0])"`
-          #STUPID_ARGS="--platform=macosx_10_9_universal2 --only-binary=:all: --target=$SITE_PACKAGES" 
-          STUPID_ARGS="--platform=macosx_10_9_universal2 --only-binary=:all:" 
+          SITE_PACKAGES=`$PYTHON -c "import site; print(site.getusersitepackages())"`
+          STUPID_ARGS="--platform=macosx_10_9_universal2 --only-binary=:all: --target=$SITE_PACKAGES" 
           $PYTHON -m pip install --user $STUPID_ARGS FXrays cypari knot_floer_homology
 
       - name: Install PLink
