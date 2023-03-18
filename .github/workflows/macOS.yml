@@ -99,7 +99,6 @@ jobs:
 
       - name: Install snappy
         run: |
-          PATH = Frameworks/Python.framework/Versions/Current/bin:$PATH 
           cd snappy/dist
           delocate-wheel snappy-*-macosx_10_9_x86_64.whl
           delocate-wheel snappy-*-macosx_11_0_arm64.whl
