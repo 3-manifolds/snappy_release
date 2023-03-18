@@ -36,6 +36,7 @@ jobs:
           ls -lR
 
       - name: Work around weird prefix bug
+        run: |
           mkdir -p /Users/runner/work/frameworks/frameworks/Python3.11
           ls /Users/runner/work/frameworks/frameworks
           ln -s ${{ github.workspace }} /Users/runner/work/frameworks/frameworks/Python3.11/dist 
