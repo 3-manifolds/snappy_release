@@ -7,7 +7,7 @@ jobs:
     name: Build and sign macOS app
     runs-on: macos-11
     env:
-      PYTHON: Frameworks/Python.framework/Versions/3.11/bin/python3
+      PYTHON: ${{ github.workspace }}/Frameworks/Python.framework/Versions/Current/bin/python3
       _PYTHON_HOST_PLATFORM: macosx-10.9-universal2
       ARCHFLAGS: "-arch x86_64 -arch arm64"
 
@@ -40,7 +40,7 @@ jobs:
           security import $CERTIFICATE_PATH -P "$P12_PASSWORD" -A -t cert -f pkcs12 -k $KEYCHAIN_PATH
           security list-keychain -d user -s $KEYCHAIN_PATH
 
-          # Create file needed release.py
+          # Create config file needed by release.py
           echo -e "[developer]\nidentity = $DEV_ID"  > notabot.cfg
           echo -e "username = $DEV_USERNAME"  >> notabot.cfg
           echo -e "password = $DEV_PASSWORD\n"  >> notabot.cfg
@@ -60,17 +60,14 @@ jobs:
           name: Frameworks.tgz
           path: snappy/mac_osx_app
 
-      - name: Unpack Frameworks
+      - name: Unpack Frameworks here so we can use our own python
         run: |
-          cd snappy/mac_osx_app
-          tar xvfz Frameworks.tgz
-          cd ../..
-          ln -s snappy/mac_osx_app/Frameworks .
+          tar xvfz snappy/mac_osx_app/Frameworks.tgz 
 
       - name: Install packages
         run: |
           $PYTHON -m pip install --user cython sphinx wheel pyx py2app delocate
-          $PYTHON -m pip install https://github.com/3-manifolds/notary/archive/main.zip
+          $PYTHON -m pip install --user https://github.com/3-manifolds/notary/archive/main.zip
 
       - name: Install universal2 wheels
         run: |
