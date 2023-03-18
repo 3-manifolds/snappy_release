@@ -52,7 +52,7 @@ jobs:
 
       - name: Install packages
         run: |
-          $PYTHON -m pip_install delocate
+          $PYTHON -m pip install delocate
           $PYTHON -m pip install --user cython sphinx wheel pyx py2app
           $PYTHON -m pip install --user https://github.com/3-manifolds/notary/archive/main.zip
 
