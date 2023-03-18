@@ -37,7 +37,7 @@ jobs:
           pwd
           mkdir -p /Users/runner/work/frameworks/frameworks/Python3.11
           ls /Users/runner/work/frameworks/frameworks
-          ln -s ${{ github.workspace }} /Users/runner/frameworks/frameworks/Python3.11/dist 
+          ln -s ${{ github.workspace }} /Users/runner/work/frameworks/frameworks/Python3.11/dist 
           mkdir /Users/runner/work/frameworks/frameworks/Python3.11 
           ln -s ${{ github.workspace }}/Frameworks /Users/runner/work/frameworks/frameworks/Python3.11/dist
           echo ls /Users/runner/work/frameworks/frameworks/Python-3.11/dist 
