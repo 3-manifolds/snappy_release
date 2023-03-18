@@ -32,8 +32,13 @@ jobs:
       - name: Unpack the frameworks so we can use our own python
         run: |
           tar xfz snappy/mac_osx_app/Frameworks.tgz
-          # Work around weird bug with the prefix of the framework python 
+          # Work around weird bug with the prefix of the framework python
+          ls Frameworks
+          pwd
           mkdir -p /Users/runner/work/frameworks/frameworks/Python3.11
+          ls /Users/runner/work/frameworks/frameworks
+          ln -s ${{ github.workspace }} /Users/runner/frameworks/frameworks/Python3.11/dist 
+          mkdir /Users/runner/work/frameworks/frameworks/Python3.11 
           ln -s ${{ github.workspace }}/Frameworks /Users/runner/work/frameworks/frameworks/Python3.11/dist
           echo ls /Users/runner/work/frameworks/frameworks/Python-3.11/dist 
           ls /Users/runner/work/frameworks/frameworks/Python-3.11/dist 
