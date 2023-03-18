@@ -126,7 +126,10 @@ jobs:
 
       - name: Unpack Frameworks here so we can use our own python
         run: |
-          tar xvfz snappy/mac_osx_app/Frameworks.tgz 
+          tar xfz snappy/mac_osx_app/Frameworks.tgz
+          # Work around weird bug
+          mkdir -p frameworks/frameworks/Python3.11
+          ln -s ../.. Frameworks/frameworks/Python3.11/dist
 
       - name: Build the installer
         run: |
