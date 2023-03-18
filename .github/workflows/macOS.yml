@@ -33,10 +33,13 @@ jobs:
         run: |
           tar xfz snappy/mac_osx_app/Frameworks.tgz
           # Work around weird bug with the prefix of the framework python
+          echo listing workspace
+          ls -l
 
       - name: Work around weird prefix bug
         run: |
           mkdir -p /Users/runner/work/frameworks/frameworks/Python3.11
+          echo ln -s ${{ github.workspace }}/Frameworks /Users/runner/work/frameworks/frameworks/Python3.11/dist
           ln -s ${{ github.workspace }}/Frameworks /Users/runner/work/frameworks/frameworks/Python3.11/dist
           echo ls /Users/runner/work/frameworks/frameworks/Python-3.11/dist 
           ls /Users/runner/work/frameworks/frameworks/Python-3.11/dist 
