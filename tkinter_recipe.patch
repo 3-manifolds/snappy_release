@@ -1,59 +1,22 @@
---- Python-3.11.1/Lib/tkinter/__init__.py.orig	2023-01-07 21:45:22
-+++ Python-3.11.1/Lib/tkinter/__init__.py	2023-03-14 17:10:05
-@@ -974,7 +974,7 @@
-         """Return None, "local" or "global" if this widget has
-         no, a local or a global grab."""
-         status = self.tk.call('grab', 'status', self._w)
--        if status == 'none': status = None
-+        if status == 'none' or not status: status = None
-         return status
+--- tkinter.py.orig	2023-03-19 13:35:28
++++ tkinter.py	2023-03-19 13:35:42
+@@ -5,6 +5,8 @@
+ import os
+ import sys
+ import textwrap
++os.environ['SETUPTOOLS_USE_DISTUTILS'] = 'stdlib'
++from pkg_resources import parse_version
  
-     def option_add(self, pattern, value, priority = None):
-@@ -2937,8 +2937,9 @@
+ try:
+     from cStringIO import StringIO
+@@ -22,8 +24,8 @@
  
-     def index(self, *args):
-         """Return position of cursor as integer in item specified in ARGS."""
--        return self.tk.getint(self.tk.call((self._w, 'index') + args))
+     tk = _tkinter.create()
+     version_string = tk.call("info", "patchlevel")
+-    return tuple(int(x) for x in version_string.split("."))
 -
-+        result = self.tk.getint(self.tk.call((self._w, 'index') + args))
-+        return result if result else None
-+    
-     def insert(self, *args):
-         """Insert TEXT in item TAGORID at position POS. ARGS must
-         be TAGORID POS TEXT."""
-@@ -3106,7 +3107,7 @@
++    v = parse_version(version_string)
++    return (v.major, v.minor, v.micro)
  
-     def get(self):
-         """Return the text."""
--        return self.tk.call(self._w, 'get')
-+        return str(self.tk.call(self._w, 'get'))
- 
-     def icursor(self, index):
-         """Insert cursor at INDEX."""
-@@ -3248,14 +3249,14 @@
-         """Get list of items from FIRST to LAST (included)."""
-         if last is not None:
-             return self.tk.splitlist(self.tk.call(
--                self._w, 'get', first, last))
-+                str(self._w, 'get', first, last)))
-         else:
--            return self.tk.call(self._w, 'get', first)
-+            return str(self.tk.call(self._w, 'get', first))
- 
-     def index(self, index):
-         """Return index of item identified with INDEX."""
-         i = self.tk.call(self._w, 'index', index)
--        if i == 'none': return None
-+        if i == 'none' or not i: return None
-         return self.tk.getint(i)
- 
-     def insert(self, index, *elements):
-@@ -3429,7 +3430,7 @@
-     def index(self, index):
-         """Return the index of a menu item identified by INDEX."""
-         i = self.tk.call(self._w, 'index', index)
--        if i == 'none': return None
-+        if i == 'none' or not i: return None
-         return self.tk.getint(i)
- 
-     def invoke(self, index):
+ def check(cmd, mf):
+     m = mf.findNode("_tkinter")
