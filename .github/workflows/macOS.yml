@@ -80,14 +80,19 @@ jobs:
 
       - name: Install packages
         run: |
+          SITE_PACKAGES=`$PYTHON -c "import site; print(site.getusersitepackages())"`
           $PYTHON -m pip install delocate wheel
           $PYTHON -m pip install --user cython sphinx pyx py2app
           $PYTHON -m pip install --user https://github.com/3-manifolds/notary/archive/main.zip
+          # Patch the p2app recipe for tkinter
+          pushd $SITE_PACKAGES/py2app/recipes
+          patch -p0 < ${{ github.workspace}}/repo/tkinter_recipe.patch
+          popd
 
       - name: Install universal2 wheels
         run: |
           SITE_PACKAGES=`$PYTHON -c "import site; print(site.getusersitepackages())"`
-          STUPID_ARGS="--platform=macosx_10_9_universal2 --only-binary=:all: --target=$SITE_PACKAGES" 
+          STUPID_ARGS="--platform=macosx_10_9_universal2 --only-binary=:all: --target=$SITE_PACKAGES"
           $PYTHON -m pip install $STUPID_ARGS FXrays cypari knot_floer_homology
 
       - name: Install PLink
