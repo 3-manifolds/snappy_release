@@ -86,7 +86,7 @@ jobs:
           $PYTHON -m pip install --user https://github.com/3-manifolds/notary/archive/main.zip
           # Patch the p2app recipe for tkinter
           pushd $SITE_PACKAGES/py2app/recipes
-          patch -p0 < ${{ github.workspace}}/repo/tkinter_recipe.patch
+          patch -p0 < ${{ github.workspace}}/tkinter_recipe.patch
           popd
 
       - name: Install universal2 wheels
