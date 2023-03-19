@@ -14,10 +14,13 @@ jobs:
 
 
     steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2.3.4
+
       - name: Clone Snappy repo
         run: |
           git clone https://github.com/3-manifolds/snappy/
-      
+
       - name: Download stripped frameworks for py2app
         uses: dawidd6/action-download-artifact@v2
         with:
@@ -86,7 +89,7 @@ jobs:
           $PYTHON -m pip install --user https://github.com/3-manifolds/notary/archive/main.zip
           # Patch the p2app recipe for tkinter
           pushd $SITE_PACKAGES/py2app/recipes
-          patch -p0 < ${{ github.workspace}}/tkinter_recipe.patch
+          patch -p0 < ${{ github.workspace }}/tkinter_recipe.patch
           popd
 
       - name: Install universal2 wheels
