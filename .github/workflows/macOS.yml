@@ -37,14 +37,18 @@ jobs:
         with:
           github_token: ${{secrets.GITHUB_TOKEN}}
           repo: 3-manifolds/frameworks
-          workflow: build_runner.yml
+          workflow: build_plain.yml
           workflow_conclusion: success
           branch: tcltk_87
           name: Frameworks.tgz
 
-      - name: Unpack the runner frameworks so we can use that python for building
+      - name: Unpack the plain frameworks so we can use that python for building
+        env:
+          RESOURCES_DIR: Frameworks/Python.framework/Versions/3.11/Resources 
         run: |
           tar xfz Frameworks.tgz
+          # py2app expects to find Python.app in the Resources directory
+          cp -R /Library/$RESOURCES/Python.app $RESOURCES
 
       - name: Install the Apple certificate and provisioning profile
         env:
