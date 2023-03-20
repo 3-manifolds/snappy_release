@@ -48,7 +48,7 @@ jobs:
         run: |
           tar xfz Frameworks.tgz
           # py2app expects to find Python.app in the Resources directory
-          cp -R /Library/$RESOURCES/Python.app $RESOURCES
+          cp -R /Library/$RESOURCES_DIR/Python.app $RESOURCES_DIR
 
       - name: Install the Apple certificate and provisioning profile
         env:
