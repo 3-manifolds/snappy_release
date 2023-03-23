@@ -84,6 +84,7 @@ jobs:
           echo -e "app_path = dist/SnapPy.app" >> notabot.cfg
           echo -e "dmg_path = disk_images/SnapPy.dmg" >> notabot.cfg
           # echo -e "bundle_id = SnapPy-autoset-below" >> notabot.cfg
+          cp notabot.cfg snappy/mac_osx_app 
 
       - name: Install packages
         run: |
@@ -161,7 +162,6 @@ jobs:
 
       - name: Notarize
         run: |
-          cp notabot.cfg snappy/mac_osx_app 
           cd snappy/mac_osx_app
           $PYTHON notarize_snappy.py
 
