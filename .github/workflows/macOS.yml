@@ -159,11 +159,11 @@ jobs:
           cd snappy/mac_osx_app
           $OURPYTHON release.py --no-freshen
 
-      - name: Notarize
-        run: |
-          cp notabot.cfg snappy/mac_osx_app 
-          cd snappy/mac_osx_app
-          $PYTHON notarize_snappy.py
+#      - name: Notarize
+#        run: |
+#          cp notabot.cfg snappy/mac_osx_app 
+#          cd snappy/mac_osx_app
+#          $PYTHON notarize_snappy.py
 
       - uses: actions/upload-artifact@v3
         with:
