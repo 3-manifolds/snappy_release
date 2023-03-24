@@ -41,13 +41,17 @@ jobs:
           branch: tcltk_87
           name: Frameworks.tgz
 
-      - name: Unpack the plain frameworks so we can use that python for building
+      - name: Unpack the runner frameworks so we can use that python for building
         env:
           RESOURCES_DIR: Frameworks/Python.framework/Versions/3.11/Resources 
+          CONFIG_DIR: Frameworks//Python.framework/Versions/3.11/lib/python3.11/config-3.11-darwin
         run: |
           tar xfz Frameworks.tgz
           # py2app expects to find Python.app in the Resources directory
           cp -R /Library/$RESOURCES_DIR/Python.app $RESOURCES_DIR
+          # py2app expects to find the Makefile in the config directory
+          cp -p /Library/$CONFIG_DIR/Makefile $CONFIG_DIR/Makefile
+
 
       - name: Install the Apple certificate and provisioning profile
         env:
