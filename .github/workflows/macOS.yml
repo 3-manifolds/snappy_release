@@ -12,7 +12,6 @@ jobs:
       _PYTHON_HOST_PLATFORM: macosx-10.9-universal2
       ARCHFLAGS: "-arch x86_64 -arch arm64"
 
-
     steps:
       - name: Checkout repo
         uses: actions/checkout@v2.3.4
@@ -83,7 +82,7 @@ jobs:
           echo -e "[app]\napp_name = SnapPy" >> notabot.cfg
           echo -e "app_path = dist/SnapPy.app" >> notabot.cfg
           echo -e "dmg_path = disk_images/SnapPy.dmg" >> notabot.cfg
-          # echo -e "bundle_id = SnapPy-autoset-below" >> notabot.cfg
+          echo -e "bundle_id = SnapPy-3.1" >> notabot.cfg 
           cp notabot.cfg snappy/mac_osx_app 
 
       - name: Install packages
@@ -147,7 +146,6 @@ jobs:
           delocate-fuse snappy-*-macosx_10_9_x86_64.whl snappy-*-macosx_11_0_arm64.whl
           $PYTHON -m pip install --user snappy-*-macosx_10_9_x86_64.whl
           cd ../..
-          echo "bundle_id = SnapPy-`$PYTHON -c "import snappy; print(snappy.__version__)"`" >> notabot.cfg
 
       - name: Do the tests
         run: |
