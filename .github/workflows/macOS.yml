@@ -161,7 +161,7 @@ jobs:
       - name: Notarize
         run: |
           cd snappy/mac_osx_app
-          $PYTHON notarize_snappy.py
+          $PYTHON notarize_snappy.py || true
 
       - uses: actions/upload-artifact@v3
         with:
