@@ -36,7 +36,7 @@ jobs:
         with:
           github_token: ${{secrets.GITHUB_TOKEN}}
           repo: 3-manifolds/frameworks
-          workflow: build_plain.yml
+          workflow: build_runner.yml
           workflow_conclusion: success
           branch: tcltk_87
           name: Frameworks.tgz
