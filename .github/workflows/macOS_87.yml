@@ -27,7 +27,7 @@ jobs:
           repo: 3-manifolds/frameworks
           workflow: build_py2app.yml
           workflow_conclusion: success
-          branch: main
+          branch: tcltk_87
           name: Frameworks.tgz
           path: snappy/mac_osx_app
 
@@ -38,7 +38,7 @@ jobs:
           repo: 3-manifolds/frameworks
           workflow: build_runner.yml
           workflow_conclusion: success
-          branch: main
+          branch: tcltk_87
           name: Frameworks.tgz
 
       - name: Unpack the runner frameworks so we can use that python for building
