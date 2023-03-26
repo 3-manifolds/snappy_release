@@ -1,10 +1,10 @@
-name: macOS
+name: macOS_Tk8.7
 
 on: [push]
 
 jobs:
   build_app:
-    name: Build and sign macOS app
+    name: Build and sign macOS app with Tk 8.7
     runs-on: macos-11
     env:
       PYTHON: /Library/Frameworks/Python.framework/Versions/3.11/bin/python3
