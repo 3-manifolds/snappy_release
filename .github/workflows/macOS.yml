@@ -46,6 +46,11 @@ jobs:
           echo -e "dmg_path = disk_images/SnapPy.dmg" >> notabot.cfg
           echo -e "bundle_id = SnapPy-3.1" >> notabot.cfg
           echo -e $DEV_ID  > DEV_ID.txt
+    - name: Install macher
+        run: |
+          wget https://github.com/culler/macher/releases/latest/download/macher
+          chmod +x macher
+          mv macher /usr/local/bin
 
       - name: Run build script
         run: |
