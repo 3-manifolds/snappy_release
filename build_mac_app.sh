@@ -15,7 +15,7 @@ $pip_install --upgrade pip setuptools wheel cython sphinx ipython pyx pypng py2a
 install_package () {
     echo checking for $1
     if [ ! -d $1 ]; then
-	git clone git@github.com:3-manifolds/$1.git
+	git clone https://github.com/3-manifolds/$1.git
 	cd $1
     else
 	cd $1
@@ -30,7 +30,7 @@ install_package () {
     }
 
 if [ ! -d frameworks ]; then
-    git clone git@github.com:3-manifolds/frameworks.git
+    git clone https://github.com/3-manifolds/frameworks.git
     ln -s ../DEV_ID.txt frameworks
 fi
 cd frameworks/TclTk
