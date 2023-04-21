@@ -44,8 +44,8 @@ jobs:
           echo -e "[app]\napp_name = SnapPy" >> notabot.cfg
           echo -e "app_path = dist/SnapPy.app" >> notabot.cfg
           echo -e "dmg_path = disk_images/SnapPy.dmg" >> notabot.cfg
-          echo -e "bundle_id = SnapPy-3.1" >> notabot.cfg 
-          cp notabot.cfg snappy/mac_osx_app 
+          echo -e "bundle_id = SnapPy-3.1" >> notabot.cfg
+	  echo -e $DEV_ID"  > DEV_ID.txt
 
       - name: Run build script
         run: |
