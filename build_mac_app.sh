@@ -33,7 +33,7 @@ $pip_install --upgrade wheel cython sphinx ipython pypng py2app networkx
 $pip_install --upgrade --no-use-pep517 pyx
 install_package () {
     if [ "$1" == "binary" ]; then
-	$pip_install --only-binary :all: $2
+	$pip_install --platform=macosx_10_9_universal2 --only-binary :all: $2
     else
         echo checking for $1
         if [ ! -d $1 ]; then
