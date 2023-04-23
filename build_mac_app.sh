@@ -55,13 +55,12 @@ if [ "$USE_PIP" == "yes" ]; then
    BINARY=binary
 fi
 install_package notary
-install_package $BINARY PLink
+install_package PLink
 install_package $BINARY FXrays
-install_package $BINARY snappy_manifolds
-install_package $BINARY snappy_15_knots
+install_package snappy_manifolds
+install_package snappy_15_knots
 install_package $BINARY CyPari
 install_package $BINARY knot_floer_homology
-# Packages with no current wheel
 install_package low_index
 install_package Spherogram
 install_package SnapPy
