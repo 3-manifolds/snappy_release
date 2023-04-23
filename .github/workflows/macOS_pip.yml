@@ -1,4 +1,4 @@
-name: macOS
+name: macOS_pip
 
 on: [push]
 
