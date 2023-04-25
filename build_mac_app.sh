@@ -32,10 +32,15 @@ pip_install="python3 -m pip install --upgrade --no-user --target=$SITE_PACKAGES"
 $pip_install --upgrade wheel cython sphinx ipython pypng py2app networkx
 $pip_install --upgrade --no-use-pep517 pyx
 install_package () {
-    if [ "$1" == "binary" ]; then
-	$pip_install --platform=macosx_10_9_universal2 --only-binary :all: $2
+    UNIVERSAL="--platform=macosx_10_9_universal2 "
+    BINARY="--only-binary :all: "
+    TEST_PYPI="--extra-index-url https://test.pypi.org/simple"
+    if [ "$1" == "binary" ] && [ "$2" == "test-pypi" ]; then
+	$pip_install $UNIVERSAL $BINARY $TEST_PYPI $3
+    elif [ "$1" == "binary" ]; then
+	$pip_install $UNIVERSAL $BINARY $2
     else
-        echo checking for $1
+        echo Building $1 from source:
         if [ ! -d $1 ]; then
 	    git clone https://github.com/3-manifolds/$1.git
 	    cd $1
@@ -44,23 +49,22 @@ install_package () {
             git pull
 	    python3 setup.py clean
         fi	
-        #python3 setup.py build
-        #python3 setup.py bdist_wheel
         shift
         $pip_install --no-deps $@ .
         cd ..
     fi
     }
 if [ "$USE_PIP" == "yes" ]; then
-   BINARY=binary
+    USE_BINARY="binary"
+    USE_TEST="test-pypi"
 fi
 install_package notary
 install_package PLink
-install_package $BINARY FXrays
+install_package $USE_BINARY FXrays
 install_package snappy_manifolds
 install_package snappy_15_knots
-install_package $BINARY CyPari
-install_package $BINARY knot_floer_homology
+install_package $USE_BINARY $USE_TEST CyPari 
+install_package $USE_BINARY knot_floer_homology
 install_package low_index
 install_package Spherogram
 install_package SnapPy
