@@ -29,7 +29,7 @@ fi
 SITE_PACKAGES=`python3 -c "import site ; print(site.getsitepackages()[0])"`
 
 pip_install="python3 -m pip install --upgrade --no-user --target=$SITE_PACKAGES"
-$pip_install --upgrade wheel cython sphinx ipython pypng py2app networkx
+$pip_install --upgrade wheel cython sphinx sphinx_rtd_theme ipython pypng py2app networkx
 $pip_install --upgrade --no-use-pep517 pyx
 install_package () {
     UNIVERSAL="--platform=macosx_10_9_universal2 "
