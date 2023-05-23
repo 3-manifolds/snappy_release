@@ -6,44 +6,10 @@ jobs:
   build_app:
     name: Build and sign macOS app
     runs-on: macos-11
-    env:
-      PYTHON: /Library/Frameworks/Python.framework/Versions/3.11/bin/python3
-      OURPYTHON: ${{ github.workspace }}/Frameworks/Python.framework/Versions/3.11/bin/python3
-      _PYTHON_HOST_PLATFORM: macosx-10.9-universal2
-      ARCHFLAGS: "-arch x86_64 -arch arm64"
 
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v2.3.4
-
-      - name: Clone Snappy repo
-        run: |
-          git clone https://github.com/3-manifolds/snappy/
-
-      - name: Download stripped frameworks for py2app
-        uses: dawidd6/action-download-artifact@v2
-        with:
-          github_token: ${{secrets.GITHUB_TOKEN}}
-          repo: 3-manifolds/frameworks
-          workflow: build_py2app.yml
-          workflow_conclusion: success
-          branch: main
-          name: Frameworks.tgz
-          path: snappy/mac_osx_app
-
-      - name: Download full frameworks for building the app
-        uses: dawidd6/action-download-artifact@v2
-        with:
-          github_token: ${{secrets.GITHUB_TOKEN}}
-          repo: 3-manifolds/frameworks
-          workflow: build_runner.yml
-          workflow_conclusion: success
-          branch: main
-          name: Frameworks.tgz
-
-      - name: Unpack the runner frameworks so we can use that python for building
-        run: |
-          tar xfz Frameworks.tgz
+        uses: actions/checkout@v3
 
       - name: Install the Apple certificate and provisioning profile
         env:
@@ -78,89 +44,32 @@ jobs:
           echo -e "[app]\napp_name = SnapPy" >> notabot.cfg
           echo -e "app_path = dist/SnapPy.app" >> notabot.cfg
           echo -e "dmg_path = disk_images/SnapPy.dmg" >> notabot.cfg
-          echo -e "bundle_id = SnapPy-3.1" >> notabot.cfg 
-          cp notabot.cfg snappy/mac_osx_app 
+          echo -e "bundle_id = SnapPy-3.1" >> notabot.cfg
+          echo -e $DEV_ID  > DEV_ID.txt
 
-      - name: Install packages
+      - name: Install macher
         run: |
-          SITE_PACKAGES=`$PYTHON -c "import site; print(site.getusersitepackages())"`
-          $PYTHON -m pip install delocate wheel
-          $PYTHON -m pip install --user cython pyx py2app sphinx sphinx_rtd_theme
-          $PYTHON -m pip install --user https://github.com/3-manifolds/notary/archive/main.zip
-          # Patch the p2app recipe for tkinter
-          pushd $SITE_PACKAGES/py2app/recipes
-          patch -p0 < ${{ github.workspace }}/tkinter_recipe.patch
-          popd
+          wget https://github.com/culler/macher/releases/latest/download/macher
+          chmod +x macher
+          mv macher /usr/local/bin
 
-      - name: Install universal2 wheels
+      - name: Download frameworks for building the app
+        uses: dawidd6/action-download-artifact@v2
+        with:
+          github_token: ${{secrets.GITHUB_TOKEN}}
+          repo: 3-manifolds/frameworks
+          workflow: build_py2app.yml
+          workflow_conclusion: success
+          branch: main
+          name: Frameworks.tgz
+      - name: Run build script
         run: |
-          SITE_PACKAGES=`$PYTHON -c "import site; print(site.getusersitepackages())"`
-          STUPID_ARGS="--platform=macosx_10_9_universal2 --only-binary=:all: --target=$SITE_PACKAGES"
-          TEST_PYPI="--extra-index-url https://test.pypi.org/simple"
-          $PYTHON -m pip install $STUPID_ARGS $TEST_PYPI FXrays cypari knot_floer_homology
-
-      - name: Install PLink
-        run: |
-          $PYTHON -m pip install --user https://github.com/3-manifolds/PLink/archive/master.zip
-
-      - name: Install low_index
-        run: |
-          $PYTHON -m pip install --user https://github.com/3-manifolds/low_index/archive/master.zip
-
-      - name: Install manifolds
-        run: |
-          $PYTHON -m pip install --user https://github.com/3-manifolds/snappy_manifolds/archive/master.zip
-          $PYTHON -m pip install --user https://github.com/3-manifolds/snappy_15_knots/archive/master.zip
-
-      - name: Install spherogram
-        run: |
-          $PYTHON -m pip install --user https://github.com/3-manifolds/spherogram/archive/master.zip
-
-      - name: Build snappy (x86_64)
-        env:
-          _PYTHON_HOST_PLATFORM: macosx-10.9-x86_64
-          ARCHFLAGS: "-arch x86_64"
-        run: |
-          cd snappy
-          $PYTHON setup.py build -j3
-          $PYTHON setup.py bdist_wheel
-
-      - name: Build snappy (arm64)
-        env:
-          _PYTHON_HOST_PLATFORM: macosx-11-arm64
-          ARCHFLAGS: "-arch arm64"
-        run: |
-          cd snappy
-          $PYTHON setup.py build -j3
-          $PYTHON setup.py bdist_wheel
-
-      - name: Install snappy
-        run: |
-          PATH=/Library/Frameworks/Python.framework/Versions/3.11/bin:$PATH
-          cd snappy/dist
-          delocate-wheel snappy-*-macosx_10_9_x86_64.whl
-          delocate-wheel snappy-*-macosx_11_0_arm64.whl
-          delocate-fuse snappy-*-macosx_10_9_x86_64.whl snappy-*-macosx_11_0_arm64.whl
-          $PYTHON -m pip install --user snappy-*-macosx_10_9_x86_64.whl
-          cd ../..
-
-      - name: Do the tests
-        run: |
-          $PYTHON -m snappy.test --skip-modern-opengl
-
-      - name: Build the installer
-        env:
-          PYTHONHOME: ${{ github.workspace }}/Frameworks/Python.framework/Versions/3.11
-        run: |
-          cd snappy/mac_osx_app
-          $OURPYTHON release.py --no-freshen
-
-      - name: Notarize
-        run: |
-          cd snappy/mac_osx_app
-          $PYTHON notarize_snappy.py || true
+          mkdir frameworks
+          mv Frameworks.tgz frameworks
+          # Uses PyPI for auxiliary SnapPy packages (FXrays, Cython, etc.)
+          bash build_mac_app.sh --use-pypi
 
       - uses: actions/upload-artifact@v3
         with:
           name: SnapPy.dmg
-          path: snappy/mac_osx_app/disk_images/SnapPy.dmg
+          path: SnapPy/mac_osx_app/disk_images/SnapPy.dmg
