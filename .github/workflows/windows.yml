@@ -51,4 +51,10 @@ jobs:
 
       - uses: actions/upload-artifact@v3
         with:
-          path: snappy/windows_exe/InstallSnapPy*.exe
+          name: InstallSnapPy-Python3.exe
+          path: snappy/windows_exe/InstallSnapPy-Python3.exe
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: InstallSnapPy-Dbg.exe
+          path: snappy/windows_exe/InstallSnapPy-Dbg.exe
