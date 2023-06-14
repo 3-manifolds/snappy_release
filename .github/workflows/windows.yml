@@ -38,6 +38,7 @@ jobs:
       - name: Install snappy
         run: |
           git clone https://github.com/3-manifolds/snappy/
+          git switch 3.1.1
           cd snappy
           python setup.py pip_install
 

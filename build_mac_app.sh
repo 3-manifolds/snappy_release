@@ -67,6 +67,10 @@ install_package $USE_BINARY $USE_TEST CyPari
 install_package $USE_BINARY knot_floer_homology
 install_package $USE_BINARY low_index
 install_package Spherogram
+git clone https://github.com/3-manifolds/SnapPy.git
+cd SnapPy
+git switch 3.1.1
+cd ..
 install_package SnapPy
 
 # if frameworks/Frameworks.tgz does not exist, build it.
