@@ -6,14 +6,14 @@ on: [push, pull_request]
 jobs:
   Windows:
     name: Build Windows installer
-    runs-on: windows-latest
+    runs-on: windows-2019
 
     steps:
-      - name: Setup Python
+      - name:e Setup Python
         uses: actions/setup-python@v3
         with:
           python-version: '3.11'
-          architecture: 'x64'   # 32bit because of comment in "windows_exe/make.py".
+          architecture: 'x86'   # 32bit because of comment in "windows_exe/make.py".
 
       - name: Install packages
         run: |
