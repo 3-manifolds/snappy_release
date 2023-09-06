@@ -39,7 +39,7 @@ jobs:
         run: |
           git clone https://github.com/3-manifolds/snappy/
           cd snappy
-          git switch 3.1.1
+          git switch win64_app
           python setup.py pip_install
 
       - name: Do the tests
