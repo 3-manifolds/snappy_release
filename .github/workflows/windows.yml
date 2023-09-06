@@ -9,7 +9,7 @@ jobs:
     runs-on: windows-latest
 
     steps:
-      - name:e Setup Python
+      - name: Setup Python
         uses: actions/setup-python@v3
         with:
           python-version: '3.11'
