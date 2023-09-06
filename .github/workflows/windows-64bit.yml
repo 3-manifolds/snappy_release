@@ -6,7 +6,7 @@ on: [push, pull_request]
 jobs:
   Windows:
     name: Build Windows installer
-    runs-on: windows-2019
+    runs-on: windows-latest
 
     steps:
       - name: Setup Python
