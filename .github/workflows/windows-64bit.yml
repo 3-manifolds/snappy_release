@@ -1,11 +1,11 @@
-name: Windows
+name: Windows 64bit
 
 on: [push, pull_request]
 
 
 jobs:
   Windows:
-    name: Build Windows installer
+    name: Build Windows installer 64bit
     runs-on: windows-latest
 
     steps:
@@ -13,11 +13,11 @@ jobs:
         uses: actions/setup-python@v3
         with:
           python-version: '3.11'
-          architecture: 'x86'   # 32bit because of comment in "windows_exe/make.py".
+          architecture: 'x64'   # Trying 64 bit
 
       - name: Install packages
         run: |
-          python -m pip install cython sphinx sphinx_rtd_theme wheel pyx "PyInstaller==5.12"
+          python -m pip install "cython<3.0" sphinx sphinx_rtd_theme wheel pyx "PyInstaller==5.12"
           python -m pip install FXrays knot_floer_homology
           python -m pip install --extra-index-url https://test.pypi.org/simple cypari
 
