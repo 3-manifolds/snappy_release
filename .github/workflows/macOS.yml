@@ -38,14 +38,14 @@ jobs:
           security list-keychain -d user -s $KEYCHAIN_PATH
 
           # Create config file needed by release.py
-          echo -e "[developer]\nidentity = $DEV_ID"  > notabot.cfg
-          echo -e "username = $DEV_USERNAME"  >> notabot.cfg
-          echo -e "password = $DEV_PASSWORD\n"  >> notabot.cfg
-          echo -e "[app]\napp_name = SnapPy" >> notabot.cfg
-          echo -e "app_path = dist/SnapPy.app" >> notabot.cfg
-          echo -e "dmg_path = disk_images/SnapPy.dmg" >> notabot.cfg
-          echo -e "bundle_id = SnapPy-3.1" >> notabot.cfg
-          echo -e $DEV_ID  > DEV_ID.txt
+          #echo -e "[developer]\nidentity = $DEV_ID"  > notabot.cfg
+          #echo -e "username = $DEV_USERNAME"  >> notabot.cfg
+          #echo -e "password = $DEV_PASSWORD\n"  >> notabot.cfg
+          #echo -e "[app]\napp_name = SnapPy" >> notabot.cfg
+          #echo -e "app_path = dist/SnapPy.app" >> notabot.cfg
+          #echo -e "dmg_path = disk_images/SnapPy.dmg" >> notabot.cfg
+          #echo -e "bundle_id = SnapPy-3.1" >> notabot.cfg
+          #echo -e $DEV_ID  > DEV_ID.txt
 
       - name: install bundle-app
         run: |
@@ -54,7 +54,6 @@ jobs:
       - name:  assemble bundle
         run: |
           ls
-          cd snappy_release
           bash make_bundle.sh
           tar cfz Snappy_app.tgz macos/snappy/SnapPy.app
 
