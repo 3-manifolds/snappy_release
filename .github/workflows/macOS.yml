@@ -53,9 +53,9 @@ jobs:
 
       - name:  assemble bundle
         run: |
-          ls
           bash make-bundle.sh
-          tar cfz Snappy_app.tgz macos/snappy/SnapPy.app
+          mv macos/snappy/SnapPy.app .
+          tar cfz Snappy_app.tgz SnapPy.app
 
       - uses: actions/upload-artifact@v3
         with:
