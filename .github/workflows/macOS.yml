@@ -47,29 +47,16 @@ jobs:
           echo -e "bundle_id = SnapPy-3.1" >> notabot.cfg
           echo -e $DEV_ID  > DEV_ID.txt
 
-      - name: Install macher
+      - name: install bundle-app
         run: |
-          wget https://github.com/culler/macher/releases/latest/download/macher
-          chmod +x macher
-          mv macher /usr/local/bin
+          python3 -m pip install bundle-app
 
-      - name: Download frameworks for building the app
-        uses: dawidd6/action-download-artifact@v2
-        with:
-          github_token: ${{secrets.GITHUB_TOKEN}}
-          repo: 3-manifolds/frameworks
-          workflow: build_py2app.yml
-          workflow_conclusion: success
-          branch: main
-          name: Frameworks.tgz
-      - name: Run build script
+      - name:  assemble bundle
         run: |
-          mkdir frameworks
-          mv Frameworks.tgz frameworks
-          # Uses PyPI for auxiliary SnapPy packages (FXrays, Cython, etc.)
-          bash build_mac_app.sh --use-pypi
+          bash make_bundle.sh
+          tar cfz Snappy_app.tgz macos/snappy/SnapPy.app
 
       - uses: actions/upload-artifact@v3
         with:
-          name: SnapPy.dmg
-          path: SnapPy/mac_osx_app/disk_images/SnapPy.dmg
+          name: SnapPy_app.tgz
+          path: ./SnapPy_app.tgz
