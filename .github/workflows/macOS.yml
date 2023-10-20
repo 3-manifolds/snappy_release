@@ -53,6 +53,8 @@ jobs:
 
       - name:  assemble bundle
         run: |
+          ls
+          cd snappy_release
           bash make_bundle.sh
           tar cfz Snappy_app.tgz macos/snappy/SnapPy.app
 
