@@ -23,5 +23,7 @@ for executable in `find $MACOS -perm +111 -type f`; do
 done
 
 $SIGN $APP
-spctl --verbose --assess SnapPy.app
+# Of course spctl will fail, since the app is not notarized.
+# But we want to see what it says.
+spctl --verbose --assess SnapPy.app || true
 popd
