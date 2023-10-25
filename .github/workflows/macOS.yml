@@ -55,10 +55,8 @@ jobs:
       - name:  assemble bundle
         run: |
           bash build-mac-app.sh
-          mv macos/snappy/SnapPy.app .
-          tar cfz Snappy_app.tgz SnapPy.app
 
       - uses: actions/upload-artifact@v3
         with:
-          name: SnapPy_app.tgz
-          path: ./SnapPy_app.tgz
+          name: SnapPy.dmg
+          path: ./macOS/dmg-maker/SnapPy.dmg

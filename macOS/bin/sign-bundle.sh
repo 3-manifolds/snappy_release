@@ -4,7 +4,7 @@ set -e
 APP=SnapPy.app
 WORK_DIR=snappy
 
-echo Signing SnapPy.app
+echo "Signing $APP ..."
 FRAMEWORKS=$APP/Contents/Frameworks
 MACOS=$APP/Contents/MacOS
 pushd $WORK_DIR
@@ -24,6 +24,8 @@ done
 
 $SIGN $APP
 # Of course spctl will fail, since the app is not notarized.
-# But we want to see what it says.
+# But we want to see what it says anyway.
+echo "Verifying with spctl - should be rejected as unnotarized ..."
 spctl --verbose --assess SnapPy.app || true
 popd
+
