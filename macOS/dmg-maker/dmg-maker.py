@@ -24,7 +24,6 @@ from math import ceil
 
 name = "SnapPy"
 dist_dir = "../dist"
-print('dmg name is %s' % name)
 
 def main():
     # Make sure the dmg isn't currently mounted, or this won't work.  
