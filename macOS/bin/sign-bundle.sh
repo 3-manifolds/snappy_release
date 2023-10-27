@@ -8,7 +8,7 @@ echo "Signing $APP ..."
 FRAMEWORKS=$APP/Contents/Frameworks
 MACOS=$APP/Contents/MacOS
 pushd $WORK_DIR
-SIGN="codesign -s $IDENTITY --entitlements entitlements.txt --timestamp --options runtime --force"
+SIGN="codesign -s $IDENTITY --entitlements entitlements.plist --timestamp --options runtime --force"
 
 for executable in `find $FRAMEWORKS -perm +111 -type f`; do
    $SIGN $executable
