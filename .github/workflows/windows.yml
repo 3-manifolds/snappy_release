@@ -1,0 +1,61 @@
+name: Windows 64bit
+
+on: [push, pull_request]
+
+
+jobs:
+  Windows:
+    name: Build Windows installer 64bit
+    runs-on: windows-latest
+
+    steps:
+      - name: Setup Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: '3.12'
+          architecture: 'x64'   # Trying 64 bit
+
+      - name: Install packages
+        run: |
+          python -m pip install setuptools
+          python -m pip install "cython<3.0" sphinx sphinx_rtd_theme wheel pyx "PyInstaller==5.12"
+          python -m pip install FXrays knot_floer_homology
+          python -m pip install --extra-index-url https://test.pypi.org/simple cypari
+
+      - name: Install PLink
+        run: python -m pip install https://github.com/3-manifolds/PLink/archive/master.zip
+
+      - name: Install low_index
+        run: python -m pip install https://github.com/3-manifolds/low_index/archive/master.zip
+
+      - name: Install manifolds
+        run: |
+          python -m pip install https://github.com/3-manifolds/snappy_manifolds/archive/master.zip
+          python -m pip install https://github.com/3-manifolds/snappy_15_knots/archive/master.zip
+
+      - name: Install spherogram
+        run: python -m pip install https://github.com/3-manifolds/spherogram/archive/master.zip
+
+      - name: Install snappy
+        run: |
+          git clone https://github.com/3-manifolds/snappy/
+          cd snappy
+          python setup.py pip_install
+
+      - name: Do the tests
+        run: python -m snappy.test --skip-modern-opengl
+
+      - name: Build the installer
+        run: |
+          cd snappy/windows_exe
+          python make.py
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: InstallSnapPy-Python3.exe
+          path: snappy/windows_exe/InstallSnapPy-Python3.exe
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: InstallSnapPy-Dbg.exe
+          path: snappy/windows_exe/InstallSnapPy-Dbg.exe
