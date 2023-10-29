@@ -1,11 +1,11 @@
-name: Windows 64bit
+name: Windows x64 with Python 3.12
 
 on: [push, pull_request]
 
 
 jobs:
   Windows:
-    name: Build Windows installer 64bit
+    name: Build 64-bit Windows installer with Python 3.12
     runs-on: windows-latest
 
     steps:
