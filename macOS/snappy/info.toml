@@ -37,8 +37,16 @@ OSAScriptingDefinition = "SnapPy.sdef"
   CFBundleTypeExtensions = [ "py", ]
   CFBundleTypeMIMETypes = [ "application/x-python", ]
   CFBundleTypeOSTypes = [ "TEXT", "****", ]
+  CFBundleTypeRole = "Viewer"
 [[CFBundleDocumentTypes]]
-  CFBundleTypeName = "Plain text file"
-  CFBundleTypeExtensions = [ "txt", ]
+  CFBundleTypeName = "Triangulation"
+  CFBundleTypeExtensions = [ "tri", ]
   CFBundleTypeMIMETypes = [ "application/text", ]
   CFBundleTypeOSTypes = [ "TEXT", "****", ]
+  CFBundleTypeRole = "Viewer"
+[[CFBundleDocumentTypes]]
+  CFBundleTypeName = "Link projection"
+  CFBundleTypeExtensions = [ "tri", ]
+  CFBundleTypeMIMETypes = [ "application/text", ]
+  CFBundleTypeOSTypes = [ "TEXT", "****", ]
+  CFBundleTypeRole = "Viewer"

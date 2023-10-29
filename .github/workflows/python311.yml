@@ -11,10 +11,10 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v3
 
-      - name: Use Python 3.12
+      - name: Use Python 3.11
         uses: actions/setup-python@v4
         with:
-          python-version: 3.12
+          python-version: 3.11
 
       - name: Install the Apple certificate and provisioning profile
         env:
@@ -50,11 +50,11 @@ jobs:
 
       - name: install bundle-app
         run: |
-          python3 -m pip install bundle-app
+          python3.11 -m pip install bundle-app
 
       - name:  assemble bundle
         run: |
-          bash build-mac-app.sh
+          python3.11 build-mac-app.py
 
       - uses: actions/upload-artifact@v3
         with:

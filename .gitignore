@@ -1,0 +1,6 @@
+*.pyc
+__pycache__
+*.tgz
+*.dmg
+dist
+IDs.sh
