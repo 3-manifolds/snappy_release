@@ -18,7 +18,7 @@ jobs:
       - name: Install packages
         run: |
           python -m pip install setuptools
-          python -m pip install "cython<3.0" sphinx sphinx_rtd_theme wheel pyx "PyInstaller==5.12"
+          python -m pip install "cython<3.0" sphinx sphinx_rtd_theme wheel pyx "PyInstaller==5.13"
           python -m pip install FXrays knot_floer_homology
           python -m pip install --extra-index-url https://test.pypi.org/simple cypari
 
