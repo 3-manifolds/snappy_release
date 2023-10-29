@@ -1,4 +1,4 @@
-name: Windows x64 with Python3.11:
+name: Windows x64 with Python3.11
 
 on: [push, pull_request]
 
