@@ -39,7 +39,7 @@ jobs:
           python setup.py pip_install
 
       - name: Do the tests
-        run: python -m snappy.test --skip-modern-opengl
+        run: python -m snappy.test --skip-gui
 
       - name: Build the installer
         run: |
