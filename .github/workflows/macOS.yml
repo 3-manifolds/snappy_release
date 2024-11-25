@@ -21,7 +21,7 @@ jobs:
           git clone https://github.com/3-manifolds/snappy/
 
       - name: Download stripped frameworks for py2app
-        uses: dawidd6/action-download-artifact@v2
+        uses: dawidd6/action-download-artifact@v6
         with:
           github_token: ${{secrets.GITHUB_TOKEN}}
           repo: 3-manifolds/frameworks
@@ -32,7 +32,7 @@ jobs:
           path: snappy/mac_osx_app
 
       - name: Download full frameworks for building the app
-        uses: dawidd6/action-download-artifact@v2
+        uses: dawidd6/action-download-artifact@v6
         with:
           github_token: ${{secrets.GITHUB_TOKEN}}
           repo: 3-manifolds/frameworks
@@ -43,7 +43,7 @@ jobs:
 
       - name: Unpack the runner frameworks so we can use that python for building
         run: |
-          tar xfz Frameworks.tgz
+          tar xfz Frameworks-3.13.tgz
 
       - name: Install the Apple certificate and provisioning profile
         env:
