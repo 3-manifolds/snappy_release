@@ -5,16 +5,16 @@ on: [push]
 jobs:
   build_app:
     name: Build and sign macOS app
-    runs-on: macos-11
+    runs-on: macos-13
     env:
-      PYTHON: /Library/Frameworks/Python.framework/Versions/3.11/bin/python3
-      OURPYTHON: ${{ github.workspace }}/Frameworks/Python.framework/Versions/3.11/bin/python3
+      PYTHON: /Library/Frameworks/Python.framework/Versions/3.13/bin/python3
+      OURPYTHON: ${{ github.workspace }}/Frameworks/Python.framework/Versions/3.13/bin/python3
       _PYTHON_HOST_PLATFORM: macosx-10.9-universal2
       ARCHFLAGS: "-arch x86_64 -arch arm64"
 
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v2.3.4
+        uses: actions/checkout@v4
 
       - name: Clone Snappy repo
         run: |
@@ -25,9 +25,9 @@ jobs:
         with:
           github_token: ${{secrets.GITHUB_TOKEN}}
           repo: 3-manifolds/frameworks
-          workflow: build_py2app.yml
+          workflow: build.yml
           workflow_conclusion: success
-          branch: main
+          branch: python_3.13
           name: Frameworks.tgz
           path: snappy/mac_osx_app
 
@@ -84,6 +84,7 @@ jobs:
       - name: Install packages
         run: |
           SITE_PACKAGES=`$PYTHON -c "import site; print(site.getusersitepackages())"`
+          $PYTHON -m pip install "setuptools<=71"
           $PYTHON -m pip install delocate wheel
           $PYTHON -m pip install --user cython pyx py2app sphinx sphinx_rtd_theme
           $PYTHON -m pip install --user https://github.com/3-manifolds/notary/archive/main.zip
@@ -136,7 +137,7 @@ jobs:
 
       - name: Install snappy
         run: |
-          PATH=/Library/Frameworks/Python.framework/Versions/3.11/bin:$PATH
+          PATH=/Library/Frameworks/Python.framework/Versions/3.13/bin:$PATH
           cd snappy/dist
           delocate-wheel snappy-*-macosx_10_9_x86_64.whl
           delocate-wheel snappy-*-macosx_11_0_arm64.whl
@@ -150,7 +151,7 @@ jobs:
 
       - name: Build the installer
         env:
-          PYTHONHOME: ${{ github.workspace }}/Frameworks/Python.framework/Versions/3.11
+          PYTHONHOME: ${{ github.workspace }}/Frameworks/Python.framework/Versions/3.13
         run: |
           cd snappy/mac_osx_app
           $OURPYTHON release.py --no-freshen
@@ -160,7 +161,7 @@ jobs:
           cd snappy/mac_osx_app
           $PYTHON notarize_snappy.py || true
 
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: SnapPy.dmg
           path: snappy/mac_osx_app/disk_images/SnapPy.dmg
