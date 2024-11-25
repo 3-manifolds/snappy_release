@@ -141,7 +141,7 @@ jobs:
           cd snappy/dist
           delocate-wheel snappy-*-macosx_10_9_x86_64.whl
           delocate-wheel snappy-*-macosx_11_0_arm64.whl
-          delocate-fuse snappy-*-macosx_10_9_x86_64.whl snappy-*-macosx_11_0_arm64.whl
+          delocate-merge snappy-*-macosx_10_9_x86_64.whl snappy-*-macosx_11_0_arm64.whl
           $PYTHON -m pip install --user snappy-*-macosx_10_9_x86_64.whl
           cd ../..
 
