@@ -98,7 +98,8 @@ jobs:
           SITE_PACKAGES=`$PYTHON -c "import site; print(site.getusersitepackages())"`
           STUPID_ARGS="--platform=macosx_10_13_universal2 --only-binary=:all: --target=$SITE_PACKAGES"
           TEST_PYPI="--extra-index-url https://test.pypi.org/simple"
-          $PYTHON -m pip install $STUPID_ARGS $TEST_PYPI FXrays cypari knot_floer_homology
+          $PYTHON -m pip install $STUPID_ARGS $TEST_PYPI FXrays cypari
+          $PYTHON -m pip install $STUPID_ARGS $TEST_PYPI --no-deps knot_floer_homology
 
       - name: Install PLink
         run: |
