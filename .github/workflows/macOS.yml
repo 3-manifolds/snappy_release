@@ -29,7 +29,7 @@ jobs:
           workflow_conclusion: success
           branch: python_3.13
           name: Frameworks.tgz
-          path: snappy/mac_osx_app
+          path: snappy/macOS_app
 
       - name: Download full frameworks for building the app
         uses: dawidd6/action-download-artifact@v6
@@ -78,8 +78,8 @@ jobs:
           echo -e "[app]\napp_name = SnapPy" >> notabot.cfg
           echo -e "app_path = dist/SnapPy.app" >> notabot.cfg
           echo -e "dmg_path = disk_images/SnapPy.dmg" >> notabot.cfg
-          echo -e "bundle_id = SnapPy-3.1" >> notabot.cfg 
-          cp notabot.cfg snappy/mac_osx_app 
+          echo -e "bundle_id = SnapPy-3.1" >> notabot.cfg
+          cp notabot.cfg snappy/macOS_app
 
       - name: Install packages
         run: |
@@ -149,15 +149,15 @@ jobs:
         env:
           PYTHONHOME: ${{ github.workspace }}/Frameworks/Python.framework/Versions/3.13
         run: |
-          cd snappy/mac_osx_app
+          cd snappy/macOS_app
           $OURPYTHON release.py --no-freshen
 
       - name: Notarize
         run: |
-          cd snappy/mac_osx_app
+          cd snappy/macOS_app
           $PYTHON notarize_snappy.py || true
 
       - uses: actions/upload-artifact@v4
         with:
           name: SnapPy.dmg
-          path: snappy/mac_osx_app/disk_images/SnapPy.dmg
+          path: snappy/macOS_app/disk_images/SnapPy.dmg
