@@ -8,7 +8,6 @@ jobs:
     runs-on: macos-13
     env:
       PYTHON: /Library/Frameworks/Python.framework/Versions/3.13/bin/python3
-      OURPYTHON: ${{ github.workspace }}/Frameworks/Python.framework/Versions/3.13/bin/python3
       _PYTHON_HOST_PLATFORM: macosx-10.9-universal2
       ARCHFLAGS: "-arch x86_64 -arch arm64"
 
@@ -30,20 +29,6 @@ jobs:
           branch: python_3.13
           name: Frameworks.tgz
           path: snappy/macOS_app
-
-      - name: Download full frameworks for building the app
-        uses: dawidd6/action-download-artifact@v6
-        with:
-          github_token: ${{secrets.GITHUB_TOKEN}}
-          repo: 3-manifolds/frameworks
-          workflow: build.yml
-          workflow_conclusion: success
-          branch: python_3.13
-          name: Frameworks.tgz
-
-      - name: Unpack the runner frameworks so we can use that python for building
-        run: |
-          tar xfz Frameworks-3.13.tgz
 
       - name: Install the Apple certificate and provisioning profile
         env:
@@ -146,11 +131,9 @@ jobs:
           $PYTHON -m snappy.test --skip-gui
 
       - name: Build the installer
-        env:
-          PYTHONHOME: ${{ github.workspace }}/Frameworks/Python.framework/Versions/3.13
         run: |
           cd snappy/macOS_app
-          $OURPYTHON release.py --no-freshen
+          $PYTHON release.py --no-freshen
 
       - name: Notarize
         run: |
