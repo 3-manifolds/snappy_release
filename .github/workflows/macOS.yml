@@ -84,8 +84,8 @@ jobs:
       - name: Install packages
         run: |
           SITE_PACKAGES=`$PYTHON -c "import site; print(site.getusersitepackages())"`
-          $PYTHON -m pip install "setuptools<=71"
-          $PYTHON -m pip install delocate wheel
+          $PYTHON -m pip install --user "setuptools<71"
+          $PYTHON -m pip install --user delocate wheel
           $PYTHON -m pip install --user cython pyx py2app sphinx sphinx_rtd_theme
           $PYTHON -m pip install --user https://github.com/3-manifolds/notary/archive/main.zip
           # Patch the p2app recipe for tkinter
