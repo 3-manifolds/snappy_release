@@ -85,7 +85,7 @@ jobs:
         run: |
           SITE_PACKAGES=`$PYTHON -c "import site; print(site.getusersitepackages())"`
           $PYTHON -m pip install --user "setuptools<71"
-          $PYTHON -m pip install --user delocate wheel
+          $PYTHON -m pip install --user wheel delocate
           $PYTHON -m pip install --user cython pyx py2app sphinx sphinx_rtd_theme
           $PYTHON -m pip install --user https://github.com/3-manifolds/notary/archive/main.zip
           # Patch the p2app recipe for tkinter
@@ -134,11 +134,10 @@ jobs:
 
       - name: Install snappy
         run: |
-          PATH=/Library/Frameworks/Python.framework/Versions/3.13/bin:$PATH
           cd snappy/dist
-          delocate-wheel snappy-*-macosx_10_13_x86_64.whl
-          delocate-wheel snappy-*-macosx_11_0_arm64.whl
-          delocate-merge snappy-*-macosx_10_13_x86_64.whl snappy-*-macosx_11_0_arm64.whl
+          $PYTHON -m delocate.cmd.delocate_wheel snappy-*-macosx_10_13_x86_64.whl
+          $PYTHON -m delocate.cmd.delocate_wheel snappy-*-macosx_11_0_arm64.whl
+          $PYTHON -m delocate.cmd.delocate_merge snappy-*-macosx_10_13_x86_64.whl snappy-*-macosx_11_0_arm64.whl
           $PYTHON -m pip install --user snappy-*-macosx_10_13_universal2.whl
           cd ../..
 
