@@ -37,11 +37,8 @@ jobs:
           git clone https://github.com/3-manifolds/snappy/
           cd snappy
           python setup.py pip_install
-          cd doc_src
-          make html
-          python3 add_doc_to_wheel.py _build/snappy_doc.zip ../dist/snappy*.whl
-          cd ..
-          python3 -m pip install --force-reinstall --no-index --no-cache-dir --no-deps --find-links ./dist snappy
+          python doc_src/build_doc_add_to_wheel.py dist/snappy-*.whl
+          python -m pip install --force-reinstall --no-index --no-cache-dir --no-deps --find-links ./dist snappy
 
       - name: Do the tests
         run: python -m snappy.test --skip-gui
