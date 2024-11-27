@@ -58,7 +58,7 @@ install_package () {
             git pull
 	    python3 setup.py clean
         fi
-        python3 -m pip wheel --no-isolation --wheel-dir=../wheelhouse .
+        python3 -m pip wheel --no-build-isolation --wheel-dir=../wheelhouse .
         python3 -m pip install --force-reinstall --no-index --no-cache-dir --no-deps --find-links ../wheelhouse ${@: -1}
 	cd ..
     fi
