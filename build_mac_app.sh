@@ -77,7 +77,7 @@ install_package spherogram
 install_package snappy
 
 # Build snappy docs and add to wheel
-python3 snappy/doc_src/build_doc_add_to_wheel.py wheelhouse/snappy-*universal2.whl
+python3 snappy/doc_src/build_doc_add_to_wheel.py wheelhouse
 python3 -m pip install --force-reinstall --no-index --no-cache-dir --no-deps --find-links ./wheelhouse snappy
 
 # if frameworks/Frameworks.tgz does not exist, build it.
