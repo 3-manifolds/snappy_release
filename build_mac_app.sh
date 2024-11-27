@@ -27,10 +27,14 @@ if [ ! -d build_env ]; then
 fi
 . build_env/bin/activate
 SITE_PACKAGES=`python3 -c "import site ; print(site.getsitepackages()[0])"`
+# We store the wheels created here
+rm -rf wheelhouse
+mkdir wheelhouse
 
 pip_install="python3 -m pip install --upgrade --no-user --target=$SITE_PACKAGES"
-$pip_install --upgrade wheel cython sphinx sphinx_rtd_theme ipython pypng py2app networkx
+$pip_install --upgrade wheel build cython sphinx sphinx_rtd_theme ipython pypng py2app networkx
 $pip_install --upgrade --no-use-pep517 pyx
+$pip_install "setuptools<71"  # Needed for compatibility with py2app as of 2024-11-27
 install_package () {
     UNIVERSAL="--platform=macosx_10_13_universal2 "
     BINARY="--only-binary :all: "
@@ -49,44 +53,35 @@ install_package () {
             git pull
 	    python3 setup.py clean
         fi	
-        shift
-        $pip_install --no-deps $@ .
-        cd ..
+        python3 -m build --wheel --no-isolation --outdir ../wheelhouse .
+        python3 -m pip install --force-reinstall --no-index --no-cache-dir --no-deps --find-links ../wheelhouse ${@: -1}
+	cd ..
     fi
     }
+
 if [ "$USE_PYPI" == "yes" ]; then
     USE_BINARY="binary"
     USE_TEST="test-pypi"
 fi
-install_package binary "setuptools<71"
-install_package notary
-install_package PLink
+
+install_package notary notabot
+install_package plink
 install_package $USE_BINARY FXrays
 install_package snappy_manifolds
 install_package snappy_15_knots
-install_package $USE_BINARY $USE_TEST CyPari 
+install_package $USE_BINARY $USE_TEST cypari 
 install_package $USE_BINARY knot_floer_homology
 install_package $USE_BINARY low_index
 $pip_install tkinter_gl
-install_package Spherogram
-# Build SnapPy and its docs
-echo Building SnapPy from source:
-if [ ! -d SnapPy ]; then
-    git clone https://github.com/3-manifolds/$1.git
-    cd SnapPy
-else
-    cd SnapPy
-    git pull
-    python3 setup.py clean
-fi
-python3 setup.py build -j 4
-python3 setup.py bdist_wheel
-python3 -m pip install --no-index --find-links dist snappy
-python3 setup.py build_docs
-python3 setup.py bdist_wheel
-python3 -m pip install --force-reinstall --no-index --find-links dist snappy
-cd ..
+install_package spherogram
+install_package snappy
 
+# Build snappy docs and add to wheel
+cd snappy/doc_src
+make html
+python3 add_doc_to_wheel.py _build/snappy_doc.zip ../../wheelhouse/snappy*.whl
+cd ../..
+python3 -m pip install --force-reinstall --no-index --no-cache-dir --no-deps --find-links ./wheelhouse snappy
 
 # if frameworks/Frameworks.tgz does not exist, build it.
 if [ ! -e frameworks/Frameworks-3.13.tgz ]; then
