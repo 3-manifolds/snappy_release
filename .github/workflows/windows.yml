@@ -46,7 +46,7 @@ jobs:
       - name: Build the installer
         run: |
           cd snappy/windows_exe
-          python make.py
+          python make.py --no-freshen
 
       - uses: actions/upload-artifact@v4
         with:
