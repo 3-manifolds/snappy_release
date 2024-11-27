@@ -64,7 +64,10 @@ jobs:
           echo -e "bundle_id = SnapPy-3.1" >> notabot.cfg
           cp notabot.cfg snappy/macOS_app
 
-
+      - name: Run build script
+        run: |
+          # Uses PyPI for auxiliary SnapPy packages (FXrays, Cython, etc.)
+          bash build_mac_app.sh --use-pypi
 
       - uses: actions/upload-artifact@v4
         with:
