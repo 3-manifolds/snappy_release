@@ -69,7 +69,22 @@ install_package $USE_BINARY knot_floer_homology
 install_package $USE_BINARY low_index
 $pip_install tkinter_gl
 install_package Spherogram
-install_package SnapPy
+# Build SnapPy and its docs
+echo Building SnapPy from source:
+if [ ! -d SnapPy ]; then
+    git clone https://github.com/3-manifolds/$1.git
+    cd SnapPy
+else
+    cd SnapPy
+    git pull
+    python3 setup.py clean
+fi
+python3 setup.py build -j 4
+python3 setup.py build_docs
+python3 setup.py bdist_wheel
+python3 -m pip install --no-index --find-links dist snappy
+cd ..
+
 
 # if frameworks/Frameworks.tgz does not exist, build it.
 if [ ! -e frameworks/Frameworks-3.13.tgz ]; then
