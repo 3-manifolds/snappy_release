@@ -13,6 +13,10 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
+      - name: Clone Snappy repo
+        run: |
+          git clone https://github.com/3-manifolds/snappy/
+
       - name: Download stripped frameworks for py2app
         uses: dawidd6/action-download-artifact@v6
         with:
@@ -22,7 +26,7 @@ jobs:
           workflow_conclusion: success
           branch: python_3.13
           name: Frameworks.tgz
-          path: frameworks/Frameworks-3.13.tgz
+          path: frameworks
 
       - name: Install the Apple certificate and provisioning profile
         env:
