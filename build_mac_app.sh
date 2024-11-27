@@ -93,4 +93,4 @@ if [ ! -e notabot.cfg ]; then
     ln -s ../../notabot.cfg .
 fi
 python3 release.py --no-freshen
-python3 notarize_snappy.py
+# python3 notarize_snappy.py 
