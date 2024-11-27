@@ -38,6 +38,7 @@ $pip_install "setuptools<71"  # Needed for compatibility with py2app as of 2024-
 
 export _PYTHON_HOST_PLATFORM="macosx-10.13-universal2"
 export ARCHFLAGS="-arch arm64 -arch x86_64"
+export MACOSX_DEPLOYMENT_TARGET=10.13
 
 install_package () {
     UNIVERSAL="--platform=macosx_10_13_universal2 "
