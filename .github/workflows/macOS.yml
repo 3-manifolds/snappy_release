@@ -5,19 +5,13 @@ on: [push]
 jobs:
   build_app:
     name: Build and sign macOS app
-    runs-on: macos-13
+    runs-on: macos-latest
     env:
       PYTHON: /Library/Frameworks/Python.framework/Versions/3.13/bin/python3
-      _PYTHON_HOST_PLATFORM: macosx-10.9-universal2
-      ARCHFLAGS: "-arch x86_64 -arch arm64"
 
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
-
-      - name: Clone Snappy repo
-        run: |
-          git clone https://github.com/3-manifolds/snappy/
 
       - name: Download stripped frameworks for py2app
         uses: dawidd6/action-download-artifact@v6
@@ -28,7 +22,7 @@ jobs:
           workflow_conclusion: success
           branch: python_3.13
           name: Frameworks.tgz
-          path: snappy/macOS_app
+          path: frameworks/Frameworks-3.13.tgz
 
       - name: Install the Apple certificate and provisioning profile
         env:
@@ -66,79 +60,7 @@ jobs:
           echo -e "bundle_id = SnapPy-3.1" >> notabot.cfg
           cp notabot.cfg snappy/macOS_app
 
-      - name: Install packages
-        run: |
-          SITE_PACKAGES=`$PYTHON -c "import site; print(site.getusersitepackages())"`
-          $PYTHON -m pip install --user "setuptools<71"
-          $PYTHON -m pip install --user wheel delocate
-          $PYTHON -m pip install --user cython pyx py2app sphinx sphinx_rtd_theme
-          $PYTHON -m pip install --user https://github.com/3-manifolds/notary/archive/main.zip
-          # Patch the p2app recipe for tkinter
-          pushd $SITE_PACKAGES/py2app/recipes
-          patch -p0 < ${{ github.workspace }}/tkinter_recipe.patch
-          popd
 
-      - name: Install universal2 wheels
-        run: |
-          SITE_PACKAGES=`$PYTHON -c "import site; print(site.getusersitepackages())"`
-          STUPID_ARGS="--platform=macosx_10_13_universal2 --only-binary=:all: --target=$SITE_PACKAGES"
-          TEST_PYPI="--extra-index-url https://test.pypi.org/simple"
-          $PYTHON -m pip install $STUPID_ARGS $TEST_PYPI FXrays cypari low_index
-          $PYTHON -m pip install $STUPID_ARGS $TEST_PYPI --no-deps knot_floer_homology
-
-      - name: Install PLink
-        run: |
-          $PYTHON -m pip install --user https://github.com/3-manifolds/PLink/archive/master.zip
-
-      - name: Install manifolds
-        run: |
-          $PYTHON -m pip install --user https://github.com/3-manifolds/snappy_manifolds/archive/master.zip
-          $PYTHON -m pip install --user https://github.com/3-manifolds/snappy_15_knots/archive/master.zip
-
-      - name: Install spherogram
-        run: |
-          $PYTHON -m pip install --user https://github.com/3-manifolds/spherogram/archive/master.zip
-
-      - name: Build snappy (x86_64)
-        env:
-          _PYTHON_HOST_PLATFORM: macosx-10.13-x86_64
-          ARCHFLAGS: "-arch x86_64"
-        run: |
-          cd snappy
-          $PYTHON setup.py build -j3
-          $PYTHON setup.py bdist_wheel
-
-      - name: Build snappy (arm64)
-        env:
-          _PYTHON_HOST_PLATFORM: macosx-11-arm64
-          ARCHFLAGS: "-arch arm64"
-        run: |
-          cd snappy
-          $PYTHON setup.py build -j3
-          $PYTHON setup.py bdist_wheel
-
-      - name: Install snappy
-        run: |
-          cd snappy/dist
-          $PYTHON -m delocate.cmd.delocate_wheel snappy-*-macosx_*_x86_64.whl
-          $PYTHON -m delocate.cmd.delocate_wheel snappy-*-macosx_*_arm64.whl
-          $PYTHON -m delocate.cmd.delocate_merge snappy-*-macosx_*_x86_64.whl snappy-*-macosx_*_arm64.whl
-          $PYTHON -m pip install --user snappy-*-macosx_*_universal2.whl
-          cd ../..
-
-      - name: Do the tests
-        run: |
-          $PYTHON -m snappy.test --skip-gui
-
-      - name: Build the installer
-        run: |
-          cd snappy/macOS_app
-          $PYTHON release.py --no-freshen
-
-      - name: Notarize
-        run: |
-          cd snappy/macOS_app
-          $PYTHON notarize_snappy.py || true
 
       - uses: actions/upload-artifact@v4
         with:

@@ -32,7 +32,7 @@ pip_install="python3 -m pip install --upgrade --no-user --target=$SITE_PACKAGES"
 $pip_install --upgrade wheel cython sphinx sphinx_rtd_theme ipython pypng py2app networkx
 $pip_install --upgrade --no-use-pep517 pyx
 install_package () {
-    UNIVERSAL="--platform=macosx_10_9_universal2 "
+    UNIVERSAL="--platform=macosx_10_13_universal2 "
     BINARY="--only-binary :all: "
     TEST_PYPI="--extra-index-url https://test.pypi.org/simple"
     if [ "$1" == "binary" ] && [ "$2" == "test-pypi" ]; then
@@ -58,6 +58,7 @@ if [ "$USE_PYPI" == "yes" ]; then
     USE_BINARY="binary"
     USE_TEST="test-pypi"
 fi
+install_package binary "setuptools<71"
 install_package notary
 install_package PLink
 install_package $USE_BINARY FXrays
@@ -66,11 +67,12 @@ install_package snappy_15_knots
 install_package $USE_BINARY $USE_TEST CyPari 
 install_package $USE_BINARY knot_floer_homology
 install_package $USE_BINARY low_index
+$pip_install tkinter_gl
 install_package Spherogram
 install_package SnapPy
 
 # if frameworks/Frameworks.tgz does not exist, build it.
-if [ ! -e frameworks/Frameworks.tgz ]; then
+if [ ! -e frameworks/Frameworks-3.13.tgz ]; then
     if [ ! -d frameworks ]; then
 	git clone https://github.com/3-manifolds/frameworks.git
 	ln -s ../DEV_ID.txt frameworks
@@ -83,9 +85,9 @@ if [ ! -e frameworks/Frameworks.tgz ]; then
     make FOR_PY2APP=yes
     cd ..
 fi
-cd SnapPy/mac_osx_app
-if [ ! -e Frameworks.tgz ]; then
-    ln -s ../../frameworks/Frameworks.tgz .
+cd SnapPy/macOS_app
+if [ ! -e Frameworks-3.13.tgz ]; then
+    ln -s ../../frameworks/Frameworks-3.13.tgz .
 fi
 if [ ! -e notabot.cfg ]; then
     ln -s ../../notabot.cfg .
