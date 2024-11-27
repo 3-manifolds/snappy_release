@@ -57,3 +57,8 @@ jobs:
         with:
           name: InstallSnapPy-Dbg.exe
           path: snappy/windows_exe/InstallSnapPy-Dbg.exe
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: wheels
+          path: snappy/dist/*.whl
