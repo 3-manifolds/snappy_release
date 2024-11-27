@@ -80,9 +80,11 @@ else
     python3 setup.py clean
 fi
 python3 setup.py build -j 4
-python3 setup.py build_docs
 python3 setup.py bdist_wheel
 python3 -m pip install --no-index --find-links dist snappy
+python3 setup.py build_docs
+python3 setup.py bdist_wheel
+python3 -m pip install --force-reinstall --no-index --find-links dist snappy
 cd ..
 
 
