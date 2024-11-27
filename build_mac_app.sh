@@ -53,7 +53,7 @@ install_package () {
             git pull
 	    python3 setup.py clean
         fi
-        python3 -m pip wheel --outdir ../wheelhouse .
+        python3 -m pip wheel --wheel-dir ../wheelhouse .
         python3 -m pip install --force-reinstall --no-index --no-cache-dir --no-deps --find-links ../wheelhouse ${@: -1}
 	cd ..
     fi
