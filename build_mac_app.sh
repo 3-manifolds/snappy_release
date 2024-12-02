@@ -107,7 +107,7 @@ if [ ! -e notabot.cfg ]; then
     ln -s ../../notabot.cfg .
 fi
 python3 release.py --no-freshen
-pushd Contents/Frameworks/Python.framework/Versions/Current/lib/python*
+pushd dist/SnapPy.app/Contents/Frameworks/Python.framework/Versions/Current/lib/python*
 mv lib-dynload /tmp
 rm -rf ./*
 mv /tmp/lib-dynload .
