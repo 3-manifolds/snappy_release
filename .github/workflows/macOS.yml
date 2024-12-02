@@ -61,7 +61,7 @@ jobs:
           echo -e "[app]\napp_name = SnapPy" >> notabot.cfg
           echo -e "app_path = dist/SnapPy.app" >> notabot.cfg
           echo -e "dmg_path = disk_images/SnapPy.dmg" >> notabot.cfg
-          echo -e "bundle_id = SnapPy-3.1" >> notabot.cfg
+          echo -e "[entitlements]\nplist_file = entitlements.plist"  >> notabot.cfg
           cp notabot.cfg snappy/macOS_app
 
       - name: Run build script

@@ -69,7 +69,7 @@ if [ "$USE_PYPI" == "yes" ]; then
     USE_TEST="test-pypi"
 fi
 
-install_package notary notabot
+install_package notabot
 install_package plink
 install_package $USE_BINARY FXrays
 install_package snappy_manifolds
@@ -96,7 +96,7 @@ if [ ! -e frameworks/Frameworks-3.13.tgz ]; then
 	. fetch_tcltk.sh
     fi
     cd ..
-    make FOR_PY2APP=yes
+    make
     cd ..
 fi
 cd SnapPy/macOS_app
@@ -107,4 +107,9 @@ if [ ! -e notabot.cfg ]; then
     ln -s ../../notabot.cfg .
 fi
 python3 release.py --no-freshen
-# python3 notarize_snappy.py 
+pushd Contents/Frameworks/Python.framework/Versions/Current/lib/python*
+mv lib-dynload /tmp
+rm -rf ./*
+mv /tmp/lib-dynload .
+popd
+python3 notarize_snappy.py 
