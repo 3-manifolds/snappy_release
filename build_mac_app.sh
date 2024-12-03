@@ -69,7 +69,7 @@ if [ "$USE_PYPI" == "yes" ]; then
     USE_TEST="test-pypi"
 fi
 
-install_package notabot
+install_package binary notabot
 install_package plink
 install_package $USE_BINARY FXrays
 install_package snappy_manifolds
@@ -106,10 +106,4 @@ fi
 if [ ! -e notabot.cfg ]; then
     ln -s ../../notabot.cfg .
 fi
-python3 release.py --no-freshen
-pushd dist/SnapPy.app/Contents/Frameworks/Python.framework/Versions/Current/lib/python*
-mv lib-dynload /tmp
-rm -rf ./*
-mv /tmp/lib-dynload .
-popd
-python3 notarize_snappy.py 
+python3 release.py --no-freshen --notarize
