@@ -17,7 +17,7 @@ jobs:
         run: |
           git clone https://github.com/3-manifolds/snappy/
 
-      - name: Download stripped frameworks for py2app
+      - name: Download frameworks for py2app
         uses: dawidd6/action-download-artifact@v6
         with:
           github_token: ${{secrets.GITHUB_TOKEN}}
