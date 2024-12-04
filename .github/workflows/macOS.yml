@@ -10,8 +10,11 @@ jobs:
       PYTHON: /Library/Frameworks/Python.framework/Versions/3.13/bin/python3
 
     steps:
-      - name: Checkout repo
+      - name: Checkout repo and install Python
         uses: actions/checkout@v4
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
 
       - name: Clone Snappy repo
         run: |
