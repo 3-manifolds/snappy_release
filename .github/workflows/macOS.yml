@@ -10,8 +10,10 @@ jobs:
       PYTHON: /Library/Frameworks/Python.framework/Versions/3.13/bin/python3
 
     steps:
-      - name: Checkout repo and install Python
+      - name: Checkout repo
         uses: actions/checkout@v4
+
+      - name: Install Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.13'
