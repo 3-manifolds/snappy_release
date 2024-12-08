@@ -59,14 +59,13 @@ jobs:
           security import $CERTIFICATE_PATH -P "$P12_PASSWORD" -A -t cert -f pkcs12 -k $KEYCHAIN_PATH
           security list-keychain -d user -s $KEYCHAIN_PATH
 
-          # Create config file needed by release.py
+          # Create notabot config file
           echo -e "[developer]\nidentity = $DEV_ID"  > notabot.cfg
           echo -e "username = $DEV_USERNAME"  >> notabot.cfg
           echo -e "password = $DEV_PASSWORD\n"  >> notabot.cfg
-          echo -e "[app]\napp_name = SnapPy" >> notabot.cfg
-          echo -e "app_path = dist/SnapPy.app" >> notabot.cfg
-          echo -e "dmg_path = disk_images/SnapPy.dmg" >> notabot.cfg
           echo -e "[entitlements]\nplist_file = entitlements.plist"  >> notabot.cfg
+          echo -e "[paths]\nbundle_path = dist/SnapPy.app" >> notabot.cfg
+          echo -e "dmg_path = disk_images/SnapPy.dmg" >> notabot.cfg
           cp notabot.cfg snappy/macOS_app
 
       - name: Run build script
