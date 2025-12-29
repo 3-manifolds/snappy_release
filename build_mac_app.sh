@@ -32,9 +32,7 @@ rm -rf wheelhouse
 mkdir wheelhouse
 
 pip_install="python3 -m pip install --upgrade --no-user --target=$SITE_PACKAGES"
-$pip_install --upgrade wheel build cython sphinx sphinx_rtd_theme ipython pypng py2app networkx
-$pip_install --upgrade --no-use-pep517 pyx
-$pip_install "setuptools<71"  # Needed for compatibility with py2app as of 2024-11-27
+$pip_install --upgrade wheel build cython sphinx sphinx_rtd_theme ipython pypng py2app networkx pyx
 
 export _PYTHON_HOST_PLATFORM="macosx-10.13-universal2"
 export ARCHFLAGS="-arch arm64 -arch x86_64"
@@ -58,7 +56,7 @@ install_package () {
             git pull
 	    python3 setup.py clean
         fi
-        python3 -m pip wheel --no-build-isolation --wheel-dir=../wheelhouse .
+        python3 -m pip wheel --no-build-isolation --wheel-dir=../wheelhouse --pre --find-links ../wheelhouse .
         python3 -m pip install --force-reinstall --no-index --no-cache-dir --no-deps --find-links ../wheelhouse ${@: -1}
 	cd ..
     fi

@@ -70,7 +70,7 @@ jobs:
 
       - name: Run build script
         run: |
-          # Uses PyPI for auxiliary SnapPy packages (FXrays, Cython, etc.)
+          # Uses PyPI for auxiliary SnapPy packages (FXrays, CyPari, etc.)
           bash build_mac_app.sh --use-pypi
 
       - uses: actions/upload-artifact@v4
