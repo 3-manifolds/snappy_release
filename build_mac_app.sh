@@ -23,7 +23,7 @@ SNAPPY_SUITE=`pwd`
 # virtual env in order to prevent py2app from embedding them into the
 # app.
 if [ ! -d build_env ]; then
-    python3 -m venv build_env
+    python3.14 -m venv build_env
 fi
 . build_env/bin/activate
 SITE_PACKAGES=`python3 -c "import site ; print(site.getsitepackages()[0])"`
@@ -34,12 +34,12 @@ mkdir wheelhouse
 pip_install="python3 -m pip install --upgrade --no-user --target=$SITE_PACKAGES"
 $pip_install --upgrade wheel build cython sphinx sphinx_rtd_theme ipython pypng py2app networkx pyx
 
-export _PYTHON_HOST_PLATFORM="macosx-10.13-universal2"
+export _PYTHON_HOST_PLATFORM="macosx-10.15-universal2"
 export ARCHFLAGS="-arch arm64 -arch x86_64"
 export MACOSX_DEPLOYMENT_TARGET=10.13
 
 install_package () {
-    UNIVERSAL="--platform=macosx_10_13_universal2 "
+    UNIVERSAL="--platform=macosx_10_15_universal2 "
     BINARY="--only-binary :all: "
     TEST_PYPI="--extra-index-url https://test.pypi.org/simple"
     if [ "$1" == "binary" ] && [ "$2" == "test-pypi" ]; then
