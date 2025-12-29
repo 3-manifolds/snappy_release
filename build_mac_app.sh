@@ -84,7 +84,7 @@ python3 snappy/doc_src/build_doc_add_to_wheel.py wheelhouse
 python3 -m pip install --force-reinstall --no-index --no-cache-dir --no-deps --find-links ./wheelhouse snappy
 
 # if frameworks/Frameworks.tgz does not exist, build it.
-if [ ! -e frameworks/Frameworks-3.13.tgz ]; then
+if [ ! -e frameworks/Frameworks-3.14.tgz ]; then
     if [ ! -d frameworks ]; then
 	git clone https://github.com/3-manifolds/frameworks.git
 	ln -s ../DEV_ID.txt frameworks
@@ -98,8 +98,8 @@ if [ ! -e frameworks/Frameworks-3.13.tgz ]; then
     cd ..
 fi
 cd SnapPy/macOS_app
-if [ ! -e Frameworks-3.13.tgz ]; then
-    ln -s ../../frameworks/Frameworks-3.13.tgz .
+if [ ! -e Frameworks-3.14.tgz ]; then
+    ln -s ../../frameworks/Frameworks-3.14.tgz .
 fi
 if [ ! -e notabot.cfg ]; then
     ln -s ../../notabot.cfg .
