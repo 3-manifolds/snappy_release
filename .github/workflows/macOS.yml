@@ -68,12 +68,18 @@ jobs:
           echo -e "dmg_path = disk_images/SnapPy.dmg" >> notabot.cfg
           cp notabot.cfg snappy/macOS_app
 
-      - name: Run build script
+      - name: Build wheels
         run: |
           # Uses PyPI for auxiliary SnapPy packages (FXrays, CyPari, etc.)
-          bash build_mac_app.sh --use-pypi
+          bash build_mac_wheels.sh
+
+      - name: Build and sign app
+        run: |
+          bash build_mac_app.sh
 
       - uses: actions/upload-artifact@v4
         with:
           name: SnapPy.dmg
           path: snappy/macOS_app/disk_images/SnapPy.dmg
+          name: wheels
+          path: wheelhouse/*whl
