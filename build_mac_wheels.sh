@@ -1,13 +1,18 @@
 #! /bin/bash
+#
+# Build the collection of universal2 wheels needed for the macOS
+# SnapPy app.
+#
+
 set -e
-USE_PYPI=no
+USE_PYPI=yes
 usage () {
-    echo "usage: $0 [--use-pypi]"
+    echo "usage: $0 [--no-use-pypi]"
     exit 1
 }
 if (( $# == 1 )); then
-   if [ "$1" == "--use-pypi" ]; then
-        USE_PYPI=yes
+   if [ "$1" == "--no-use-pypi" ]; then
+        USE_PYPI=no
     else
         usage
     fi
@@ -19,28 +24,26 @@ if [ "$USE_PYPI" == "yes" ]; then
 fi
 SNAPPY_SUITE=`pwd`
 # Create a virtual env here for building SnapPy et al and the app.
-# It is important to not have any extraneous modules installed in the
-# virtual env in order to prevent py2app from embedding them into the
-# app.
 if [ ! -d build_env ]; then
     python3.14 -m venv build_env
 fi
 . build_env/bin/activate
-SITE_PACKAGES=`python3 -c "import site ; print(site.getsitepackages()[0])"`
+
 # We store the wheels created here
 rm -rf wheelhouse
 mkdir wheelhouse
 
-pip_install="python3 -m pip install --upgrade --no-user --target=$SITE_PACKAGES"
-$pip_install --upgrade wheel build cython sphinx sphinx_rtd_theme ipython pypng py2app networkx pyx
+pip_install="python3 -m pip install --upgrade"
+$pip_install --upgrade setuptools wheel build cython sphinx sphinx_rtd_theme ipython pypng py2app networkx pyx
 
+# Python 3.14 only supports down to macOS 10.15.
 export _PYTHON_HOST_PLATFORM="macosx-10.15-universal2"
 export ARCHFLAGS="-arch arm64 -arch x86_64"
-export MACOSX_DEPLOYMENT_TARGET=10.13
+export MACOSX_DEPLOYMENT_TARGET=10.15
 
 install_package () {
     UNIVERSAL="--platform=macosx_10_15_universal2 "
-    BINARY="--only-binary :all: "
+    BINARY="--only-binary :all:"
     TEST_PYPI="--extra-index-url https://test.pypi.org/simple"
     if [ "$1" == "binary" ] && [ "$2" == "test-pypi" ]; then
 	$pip_install $UNIVERSAL $BINARY $TEST_PYPI $3
@@ -67,6 +70,7 @@ if [ "$USE_PYPI" == "yes" ]; then
     USE_TEST="test-pypi"
 fi
 
+install_package bundle_app
 install_package binary notabot
 install_package plink
 install_package $USE_BINARY FXrays
@@ -82,26 +86,3 @@ install_package snappy
 # Build snappy docs and add to wheel
 python3 snappy/doc_src/build_doc_add_to_wheel.py wheelhouse
 python3 -m pip install --force-reinstall --no-index --no-cache-dir --no-deps --find-links ./wheelhouse snappy
-
-# if frameworks/Frameworks.tgz does not exist, build it.
-if [ ! -e frameworks/Frameworks-3.14.tgz ]; then
-    if [ ! -d frameworks ]; then
-	git clone https://github.com/3-manifolds/frameworks.git
-	ln -s ../DEV_ID.txt frameworks
-    fi
-    cd frameworks/TclTk
-    if [ ! -d Tk ] || [ ! -d Tcl ]; then
-	. fetch_tcltk.sh
-    fi
-    cd ..
-    make
-    cd ..
-fi
-cd SnapPy/macOS_app
-if [ ! -e Frameworks-3.14.tgz ]; then
-    ln -s ../../frameworks/Frameworks-3.14.tgz .
-fi
-if [ ! -e notabot.cfg ]; then
-    ln -s ../../notabot.cfg .
-fi
-python3 release.py --no-freshen --notarize
