@@ -77,9 +77,14 @@ jobs:
         run: |
           bash build_mac_app.sh
 
-      - uses: actions/upload-artifact@v4
+      - name: Upload dmg file.
+        uses: actions/upload-artifact@v4
         with:
           name: SnapPy.dmg
           path: snappy/macOS_app/disk_images/SnapPy.dmg
+
+      - name: Upload wheels.
+        uses: actions/upload-artifact@v4
+        with:
           name: wheels
           path: wheelhouse/*whl

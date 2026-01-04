@@ -48,8 +48,7 @@ jobs:
           cd snappy/windows_exe
           python make.py --no-freshen
 
-
-          - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v4
         with:
           name: InstallSnapPy-Python3.exe
           path: snappy/windows_exe/InstallSnapPy-Python3.exe
