@@ -73,6 +73,10 @@ jobs:
           # Uses PyPI for auxiliary SnapPy packages (FXrays, CyPari, etc.)
           bash build_mac_wheels.sh
 
+      - name: Fetch Framework (issue with 403 error)
+        run: |
+          gh release download --pattern Frameworks-3.14.tgz -R 3-manifolds/frameworks --dir snappy/macOS_app
+
       - name: Build and sign app
         run: |
           bash build_mac_app.sh
