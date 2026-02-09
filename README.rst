@@ -9,3 +9,4 @@ Umbrella project for building SnapPy releases
    which is invoked by the GH action.
 
 2. sdist tarballs: GH action.
+
